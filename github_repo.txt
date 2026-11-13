@@ -1,7 +1,7 @@
 #github profile
 https://www.github.com/azhar9983/
 
-#github repo for flask-express-app
+#github repo for flask-express-app used in this project
 https://github.com/azhar9983/flask-express-server.git
 
 #github repo

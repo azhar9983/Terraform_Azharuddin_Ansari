@@ -9,47 +9,11 @@ terraform {
 }
 
 provider "aws" {
-  region = var.aws_region
+  region     = var.aws_region
+  access_key = var.access_key
+  secret_key = var.secret_key
 }
 
-variable "aws_region" {
-  description = "AWS region containing an Ubuntu 26.04 AMI."
-  type        = string
-  default     = "us-east-1"
-}
-
-variable "app_repo" {
-  description = "Git repository containing backend/ and frontend/ folders."
-  type        = string
-  default     = "https://github.com/azhar9983/flask-express-server.git"
-}
-
-variable "instance_type" {
-  type    = string
-  default = "t3.small"
-}
-
-variable "key_name" {
-  description = "Optional EC2 key pair name for SSH access."
-  type        = string
-  default     = "tf-key"
-}
-
-variable "ssh_cidr" {
-  description = "CIDR allowed to SSH; set to your IP, or null to disable SSH ingress."
-  type        = string
-  default     = "0.0.0.0/0"
-}
-
-variable "frontend_container_port" {
-  type    = number
-  default = 3000
-}
-
-variable "backend_container_port" {
-  type    = number
-  default = 5000
-}
 
 data "aws_ami" "ubuntu_2604" {
   most_recent = true
@@ -148,6 +112,8 @@ resource "aws_instance" "apps" {
         restart: unless-stopped
         depends_on:
           - backend
+        environment:
+          BACKEND_URL: "http://backend:${var.backend_container_port}"
         ports:
           - "80:${var.frontend_container_port}"
     COMPOSE
@@ -167,17 +133,5 @@ resource "aws_instance" "apps" {
   tags = {
     Name = "flask-express-server"
   }
-}
-
-output "public_ip" {
-  value = aws_instance.apps.public_ip
-}
-
-output "frontend_url" {
-  value = "http://${aws_instance.apps.public_ip}"
-}
-
-output "backend_url" {
-  value = "http://${aws_instance.apps.public_ip}:9000"
 }
 
