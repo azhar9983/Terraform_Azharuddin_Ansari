@@ -100,7 +100,7 @@ Objective: Deploy both the Flask backend and the Express frontend on a single EC
 Provision the EC2 instance with Terraform.
 Configure the instance with: a user-data script or a configuration management tool (e.g., Ansible or Cloud-Init) to install dependencies (Python, Node.js), plus scripts to start the Flask backend and the Express frontend.
 Ensure both applications run on different ports (e.g., Flask on port 5000 and Express on port 3000).
-Expected Deliverables
+### Expected Deliverables
 Terraform configuration files (main.tf, variables.tf, etc.).
 A working EC2 instance with Flask and Express running and accessible via the instance's public IP.
 
@@ -326,9 +326,23 @@ Objective: Deploy the Flask backend and the Express frontend on two separate EC2
 Provision two EC2 instances using Terraform: one for the Flask backend and one for the Express frontend.
 Configure security groups to: allow communication between the two instances and expose both applications to the internet on their respective ports.
 Configuration: Use Terraform to define networking resources such as VPC, subnets, and security groups. Use user-data scripts to automate installation and startup of both applications.
+### Expected Deliverables
+Terraform configuration files.
+Two working EC2 instances: one running Flask and one running Express.
+Security groups configured to allow proper communication and public access.
+
 #################################################################
 
 repeat same like task 1 but with below code
+goto task2 folder
+```
+terraform init
+terraform fmt
+terraform validate 
+terraform plan
+terraform apply
+and approve or pre configure auto approve
+```
 
 ````````````````````````````````````code below this line``````````````````````````````````
 
@@ -339,16 +353,436 @@ repeat same like task 1 but with below code
 
 
 
+```hcl
+# terraform-task-2/main.tf
+terraform {
+  required_version = ">= 1.5.0"
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+  }
+}
+
+provider "aws" {
+  region     = var.aws_region
+  access_key = var.access_key
+  secret_key = var.secret_key
+}
+
+data "aws_ami" "ubuntu" {
+  most_recent = true
+  owners      = ["099720109477"]
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd-gp3/ubuntu-resolute-26.04-amd64-server-*"]
+  }
+  filter {
+    name   = "architecture"
+    values = ["x86_64"]
+  }
+}
+
+module "network" {
+  source        = "./modules/network"
+  project_name  = var.project_name
+  vpc_cidr      = var.vpc_cidr
+  subnet_cidr   = var.subnet_cidr
+  frontend_port = var.frontend_port
+  backend_port  = var.backend_port
+  ssh_cidr      = var.ssh_cidr
+}
+
+module "backend" {
+  source            = "./modules/app_instance"
+  name              = "${var.project_name}-backend"
+  ami_id            = data.aws_ami.ubuntu.id
+  instance_type     = var.instance_type
+  subnet_id         = module.network.subnet_id
+  security_group_id = module.network.backend_security_group_id
+  key_name          = var.key_name
+  user_data = templatefile("${path.module}/backend-user-data.sh.tftpl", {
+    app_repo       = var.app_repo
+    backend_port   = var.backend_port
+    backend_module = var.backend_module
+  })
+}
+
+module "frontend" {
+  source            = "./modules/app_instance"
+  name              = "${var.project_name}-frontend"
+  ami_id            = data.aws_ami.ubuntu.id
+  instance_type     = var.instance_type
+  subnet_id         = module.network.subnet_id
+  security_group_id = module.network.frontend_security_group_id
+  key_name          = var.key_name
+  user_data = templatefile("${path.module}/frontend-user-data.sh.tftpl", {
+    app_repo      = var.app_repo
+    frontend_port = var.frontend_port
+    backend_url   = "http://${module.backend.private_ip}:${var.backend_port}"
+  })
+}
+```
+
+```hcl
+# terraform-task-2/variables.tf
+variable "access_key" {
+
+}
+
+variable "secret_key" {
+
+}
+
+variable "aws_region" {
+  type    = string
+  default = "ap-south-1"
+}
+
+variable "project_name" {
+  type    = string
+  default = "flask-express"
+}
+
+variable "vpc_cidr" {
+  type    = string
+  default = "10.20.0.0/16"
+}
+
+variable "subnet_cidr" {
+  type    = string
+  default = "10.20.1.0/24"
+}
+
+variable "instance_type" {
+  type    = string
+  default = "t3.small"
+}
+
+variable "key_name" {
+  description = "Existing EC2 key pair name"
+  type        = string
+  default     = "new-key"
+  nullable    = true
+}
+
+variable "ssh_cidr" {
+  description = "Restrict SSH to your trusted IP in CIDR notation; null disables SSH."
+  type        = string
+  default     = null
+  nullable    = true
+}
+
+variable "app_repo" {
+  type    = string
+  default = "https://github.com/azhar9983/flask-express-server.git"
+}
+
+variable "backend_port" {
+  type    = number
+  default = 5000
+}
+
+variable "frontend_port" {
+  type    = number
+  default = 3000
+}
+
+variable "backend_module" {
+  description = "Flask import target, such as app:app."
+  type        = string
+  default     = "app:app"
+}
+```
+
+```hcl
+# terraform-task-2/outputs.tf
+output "frontend_url" {
+  value = "http://${module.frontend.public_ip}:${var.frontend_port}"
+}
+output "backend_url" {
+  value = "http://${module.backend.public_ip}:${var.backend_port}"
+}
+output "frontend_public_ip" {
+  value = module.frontend.public_ip
+}
+output "backend_public_ip" {
+  value = module.backend.public_ip
+}
+```
+
+```hcl
+# terraform-task-2/modules/network/main.tf
+resource "aws_vpc" "this" {
+  cidr_block           = var.vpc_cidr
+  enable_dns_support   = true
+  enable_dns_hostnames = true
+  tags                 = { Name = "${var.project_name}-vpc" }
+}
+
+resource "aws_internet_gateway" "this" {
+  vpc_id = aws_vpc.this.id
+  tags   = { Name = "${var.project_name}-igw" }
+}
+
+resource "aws_subnet" "public" {
+  vpc_id                  = aws_vpc.this.id
+  cidr_block              = var.subnet_cidr
+  map_public_ip_on_launch = true
+  tags                    = { Name = "${var.project_name}-public" }
+}
+
+resource "aws_route_table" "public" {
+  vpc_id = aws_vpc.this.id
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.this.id
+  }
+  tags = { Name = "${var.project_name}-public-routes" }
+}
+
+resource "aws_route_table_association" "public" {
+  subnet_id      = aws_subnet.public.id
+  route_table_id = aws_route_table.public.id
+}
+
+resource "aws_security_group" "frontend" {
+  name        = "${var.project_name}-frontend"
+  description = "Public Express access and optional SSH"
+  vpc_id      = aws_vpc.this.id
+  ingress {
+    description = "Express frontend"
+    from_port   = var.frontend_port
+    to_port     = var.frontend_port
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  dynamic "ingress" {
+    for_each = var.ssh_cidr == null ? [] : [var.ssh_cidr]
+    content {
+      description = "SSH from trusted CIDR"
+      from_port   = 22
+      to_port     = 22
+      protocol    = "tcp"
+      cidr_blocks = [ingress.value]
+    }
+  }
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  tags = { Name = "${var.project_name}-frontend" }
+}
+
+resource "aws_security_group" "backend" {
+  name        = "${var.project_name}-backend"
+  description = "Public Flask access plus frontend-to-backend traffic"
+  vpc_id      = aws_vpc.this.id
+  ingress {
+    description = "Flask API from the internet"
+    from_port   = var.backend_port
+    to_port     = var.backend_port
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    description     = "Flask API from frontend instance"
+    from_port       = var.backend_port
+    to_port         = var.backend_port
+    protocol        = "tcp"
+    security_groups = [aws_security_group.frontend.id]
+  }
+  dynamic "ingress" {
+    for_each = var.ssh_cidr == null ? [] : [var.ssh_cidr]
+    content {
+      description = "SSH from trusted CIDR"
+      from_port   = 22
+      to_port     = 22
+      protocol    = "tcp"
+      cidr_blocks = [ingress.value]
+    }
+  }
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  tags = { Name = "${var.project_name}-backend" }
+}
+```
+
+```hcl
+# terraform-task-2/modules/network/variables.tf
+variable "project_name" {
+  type = string
+}
+variable "vpc_cidr" {
+  type = string
+}
+variable "subnet_cidr" {
+  type = string
+}
+variable "frontend_port" {
+  type = number
+}
+variable "backend_port" {
+  type = number
+}
+variable "ssh_cidr" {
+  type     = string
+  default  = null
+  nullable = true
+}
+```
+
+```hcl
+# terraform-task-2/modules/network/outputs.tf
+output "subnet_id" { value = aws_subnet.public.id }
+output "frontend_security_group_id" { value = aws_security_group.frontend.id }
+output "backend_security_group_id" { value = aws_security_group.backend.id }
+```
+
+```hcl
+# terraform-task-2/modules/app_instance/main.tf
+resource "aws_instance" "this" {
+  ami                         = var.ami_id
+  instance_type               = var.instance_type
+  subnet_id                   = var.subnet_id
+  vpc_security_group_ids      = [var.security_group_id]
+  key_name                    = var.key_name
+  user_data                   = var.user_data
+  user_data_replace_on_change = true
+  root_block_device {
+    volume_size = 16
+    volume_type = "gp3"
+    encrypted   = true
+  }
+  tags = { Name = var.name }
+}
+```
+
+```hcl
+# terraform-task-2/modules/app_instance/variables.tf
+variable "name" { type = string }
+variable "ami_id" { type = string }
+variable "instance_type" { type = string }
+variable "subnet_id" { type = string }
+variable "security_group_id" { type = string }
+variable "key_name" {
+  type     = string
+  default  = null
+  nullable = true
+}
+variable "user_data" { type = string }
+```
+
+```hcl
+# terraform-task-2/modules/app_instance/outputs.tf
+output "public_ip" { value = aws_instance.this.public_ip }
+output "private_ip" { value = aws_instance.this.private_ip }
+```
+
+```hcl
+# terraform-task-2/backend-user-data.sh.tftpl
+#!/bin/bash
+set -euxo pipefail
+export DEBIAN_FRONTEND=noninteractive
+apt-get update
+apt-get install -y git python3 python3-pip python3-venv
+# AWS security groups already control inbound traffic; UFW is optional and not required here.
+git clone --depth 1 '${app_repo}' /opt/app-repo
+cd /opt/app-repo/backend
+python3 -m venv /opt/flask-venv
+/opt/flask-venv/bin/pip install --upgrade pip
+if [ -f requirements.txt ]; then /opt/flask-venv/bin/pip install -r requirements.txt; fi
+/opt/flask-venv/bin/pip install gunicorn
+cat >/etc/systemd/system/flask-app.service <<SERVICE
+[Unit]
+Description=Flask backend
+After=network.target
+[Service]
+WorkingDirectory=/opt/app-repo/backend
+Environment=PORT=${backend_port}
+ExecStart=/opt/flask-venv/bin/gunicorn --bind 0.0.0.0:${backend_port} ${backend_module}
+Restart=always
+[Install]
+WantedBy=multi-user.target
+SERVICE
+systemctl daemon-reload
+systemctl enable --now flask-app
+```
+
+```hcl
+# terraform-task-2/frontend-user-data.sh.tftpl
+#!/bin/bash
+set -euxo pipefail
+export DEBIAN_FRONTEND=noninteractive
+apt-get update
+apt-get install -y ca-certificates curl git
+curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+apt-get install -y nodejs
+git clone --depth 1 '${app_repo}' /opt/app-repo
+cd /opt/app-repo/frontend
+npm ci || npm install
+cat >/etc/systemd/system/express-app.service <<SERVICE
+[Unit]
+Description=Express frontend
+After=network.target
+[Service]
+WorkingDirectory=/opt/app-repo/frontend
+Environment=PORT=${frontend_port}
+Environment=HOST=0.0.0.0
+Environment=BACKEND_URL=${backend_url}
+ExecStart=/usr/bin/npm start
+Restart=always
+[Install]
+WantedBy=multi-user.target
+SERVICE
+systemctl daemon-reload
+systemctl enable --now express-app
+```
+
 ```````````````````````````````````code ends``````````````````````````````````````````````
 
 
+#####################################################
+
+# TASK3: Part 3: Deploy Flask and Express Using Docker and AWS Services
+Objective: Deploy Flask and Express as Docker containers using AWS ECR, ECS, and VPC with Terraform.
+ECR: Use Terraform to create two Elastic Container Registry (ECR) repositories — one for the Flask backend and one for the Express frontend. Build Docker images for both and push them to their respective ECR repositories.
+VPC: Use Terraform to create a VPC with subnets, route tables, and security groups.
+ECS: Use Terraform to set up an ECS cluster and create two ECS services — one for Flask and one for Express — using ECS Fargate or the EC2 launch type to deploy the containers.
+Load Balancer: Use Terraform to provision an Application Load Balancer (ALB) and configure ALB listeners to route requests to the appropriate ECS service.
+### Expected Deliverables
+Terraform configuration files for ECR, ECS, VPC, and ALB setup.
+Docker images pushed to ECR.
+ECS services running and accessible via the ALB.
+
+###########################################################
+
+repeat same like task 1 but with below code
+goto task3 folder
+```
+terraform init
+terraform fmt
+terraform validate 
+terraform plan
+terraform apply
+and approve or pre configure auto approve
+```
+
+````````````````````````````````````code below this line``````````````````````````````````
 
 
 
 
 
 
-
+```````````````````````````````````code ends``````````````````````````````````````````````
 
 
 

@@ -1,0 +1,26 @@
+#!/bin/bash
+set -euxo pipefail
+export DEBIAN_FRONTEND=noninteractive
+apt-get update
+apt-get install -y ca-certificates curl git
+curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+apt-get install -y nodejs
+git clone --depth 1 '${app_repo}' /opt/app-repo
+cd /opt/app-repo/frontend
+npm ci || npm install
+cat >/etc/systemd/system/express-app.service <<SERVICE
+[Unit]
+Description=Express frontend
+After=network.target
+[Service]
+WorkingDirectory=/opt/app-repo/frontend
+Environment=PORT=${frontend_port}
+Environment=HOST=0.0.0.0
+Environment=BACKEND_URL=${backend_url}
+ExecStart=/usr/bin/npm start
+Restart=always
+[Install]
+WantedBy=multi-user.target
+SERVICE
+systemctl daemon-reload
+systemctl enable --now express-app

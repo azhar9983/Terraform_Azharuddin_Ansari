@@ -1,0 +1,26 @@
+#!/bin/bash
+set -euxo pipefail
+export DEBIAN_FRONTEND=noninteractive
+apt-get update
+apt-get install -y git python3 python3-pip python3-venv
+# AWS security groups already control inbound traffic; UFW is optional and not required here.
+git clone --depth 1 '${app_repo}' /opt/app-repo
+cd /opt/app-repo/backend
+python3 -m venv /opt/flask-venv
+/opt/flask-venv/bin/pip install --upgrade pip
+if [ -f requirements.txt ]; then /opt/flask-venv/bin/pip install -r requirements.txt; fi
+/opt/flask-venv/bin/pip install gunicorn
+cat >/etc/systemd/system/flask-app.service <<SERVICE
+[Unit]
+Description=Flask backend
+After=network.target
+[Service]
+WorkingDirectory=/opt/app-repo/backend
+Environment=PORT=${backend_port}
+ExecStart=/opt/flask-venv/bin/gunicorn --bind 0.0.0.0:${backend_port} ${backend_module}
+Restart=always
+[Install]
+WantedBy=multi-user.target
+SERVICE
+systemctl daemon-reload
+systemctl enable --now flask-app

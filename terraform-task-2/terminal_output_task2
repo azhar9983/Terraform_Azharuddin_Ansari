@@ -1,0 +1,508 @@
+nown after apply)
+      ~ public_dns                           = "ec2-13-201-67-133.ap-south-1.compute.amazonaws.com" -> (known after apply)
+      ~ public_ip                            = "13.201.67.133" -> (known after apply)
+      ~ secondary_private_ips                = [] -> (known after apply)
+      ~ security_groups                      = [] -> (known after apply)
+      + spot_instance_request_id             = (known after apply)
+        tags                                 = {
+            "Name" = "flask-express-backend"
+        }
+      ~ tenancy                              = "default" -> (known after apply)
+      ~ user_data                            = "efcdedba4678661519737827d016a7ebf23d7ea8" -> "259961a2aecd009ce2103ec92893922ca4dac7d1" # forces replacement
+      + user_data_base64                     = (known after apply)
+        # (9 unchanged attributes hidden)
+
+      ~ capacity_reservation_specification (known after apply)
+      - capacity_reservation_specification {
+          - capacity_reservation_preference = "open" -> null
+        }
+
+      ~ cpu_options (known after apply)
+      - cpu_options {
+          - core_count       = 1 -> null
+          - threads_per_core = 2 -> null
+            # (1 unchanged attribute hidden)
+        }
+
+      - credit_specification {
+          - cpu_credits = "unlimited" -> null
+        }
+
+      ~ ebs_block_device (known after apply)
+
+      ~ enclave_options (known after apply)
+      - enclave_options {
+          - enabled = false -> null
+        }
+
+      ~ ephemeral_block_device (known after apply)
+
+      ~ instance_market_options (known after apply)
+
+      ~ maintenance_options (known after apply)
+      - maintenance_options {
+          - auto_recovery = "default" -> null
+        }
+
+      ~ metadata_options (known after apply)
+      - metadata_options {
+          - http_endpoint               = "enabled" -> null
+          - http_protocol_ipv6          = "disabled" -> null
+          - http_put_response_hop_limit = 2 -> null
+          - http_tokens                 = "required" -> null
+          - instance_metadata_tags      = "disabled" -> null
+        }
+
+      ~ network_interface (known after apply)
+
+      ~ private_dns_name_options (known after apply)
+      - private_dns_name_options {
+          - enable_resource_name_dns_a_record    = false -> null
+          - enable_resource_name_dns_aaaa_record = false -> null
+          - hostname_type                        = "ip-name" -> null
+        }
+
+      ~ root_block_device {
+          ~ device_name           = "/dev/sda1" -> (known after apply)
+          ~ iops                  = 3000 -> (known after apply)
+          ~ kms_key_id            = "arn:aws:kms:ap-south-1:889149079394:key/6d389fc9-b983-4332-b59d-1392a0a91c75" -> (known after apply)
+          - tags                  = {} -> null
+          ~ tags_all              = {} -> (known after apply)
+          ~ throughput            = 125 -> (known after apply)
+          ~ volume_id             = "vol-065db8d05ebe35b55" -> (known after apply)
+            # (4 unchanged attributes hidden)
+        }
+    }
+
+  # module.frontend.aws_instance.this must be replaced
+-/+ resource "aws_instance" "this" {
+      ~ arn                                  = "arn:aws:ec2:ap-south-1:889149079394:instance/i-0f7a6f940a692eec6" -> (known after apply)
+      ~ associate_public_ip_address          = true -> (known after apply)
+      ~ availability_zone                    = "ap-south-1a" -> (known after apply)
+      ~ cpu_core_count                       = 1 -> (known after apply)
+      ~ cpu_threads_per_core                 = 2 -> (known after apply)
+      ~ disable_api_stop                     = false -> (known after apply)
+      ~ disable_api_termination              = false -> (known after apply)
+      ~ ebs_optimized                        = false -> (known after apply)
+      + enable_primary_ipv6                  = (known after apply)
+      - hibernation                          = false -> null
+      + host_id                              = (known after apply)
+      + host_resource_group_arn              = (known after apply)
+      + iam_instance_profile                 = (known after apply)
+      ~ id                                   = "i-0f7a6f940a692eec6" -> (known after apply)
+      ~ instance_initiated_shutdown_behavior = "stop" -> (known after apply)
+      + instance_lifecycle                   = (known after apply)
+      ~ instance_state                       = "running" -> (known after apply)
+      ~ ipv6_address_count                   = 0 -> (known after apply)
+      ~ ipv6_addresses                       = [] -> (known after apply)
+      ~ monitoring                           = false -> (known after apply)
+      + outpost_arn                          = (known after apply)
+      + password_data                        = (known after apply)
+      + placement_group                      = (known after apply)
+      ~ placement_partition_number           = 0 -> (known after apply)
+      ~ primary_network_interface_id         = "eni-0795456735d9f5c1d" -> (known after apply)
+      ~ private_dns                          = "ip-10-20-1-104.ap-south-1.compute.internal" -> (known after apply)
+      ~ private_ip                           = "10.20.1.104" -> (known after apply)
+      ~ public_dns                           = "ec2-13-232-35-133.ap-south-1.compute.amazonaws.com" -> (known after apply)
+      ~ public_ip                            = "13.232.35.133" -> (known after apply)
+      ~ secondary_private_ips                = [] -> (known after apply)
+      ~ security_groups                      = [] -> (known after apply)
+      + spot_instance_request_id             = (known after apply)
+        tags                                 = {
+            "Name" = "flask-express-frontend"
+        }
+      ~ tenancy                              = "default" -> (known after apply)
+      ~ user_data                            = "d226f14d013ea1dc312897d0ffa3f527fbac524d" -> (known after apply) # forces replacement
+      + user_data_base64                     = (known after apply)
+        # (9 unchanged attributes hidden)
+
+      ~ capacity_reservation_specification (known after apply)
+      - capacity_reservation_specification {
+          - capacity_reservation_preference = "open" -> null
+        }
+
+      ~ cpu_options (known after apply)
+      - cpu_options {
+          - core_count       = 1 -> null
+          - threads_per_core = 2 -> null
+            # (1 unchanged attribute hidden)
+        }
+
+      - credit_specification {
+          - cpu_credits = "unlimited" -> null
+        }
+
+      ~ ebs_block_device (known after apply)
+
+      ~ enclave_options (known after apply)
+      - enclave_options {
+          - enabled = false -> null
+        }
+
+      ~ ephemeral_block_device (known after apply)
+
+      ~ instance_market_options (known after apply)
+
+      ~ maintenance_options (known after apply)
+      - maintenance_options {
+          - auto_recovery = "default" -> null
+        }
+
+      ~ metadata_options (known after apply)
+      - metadata_options {
+          - http_endpoint               = "enabled" -> null
+          - http_protocol_ipv6          = "disabled" -> null
+          - http_put_response_hop_limit = 2 -> null
+          - http_tokens                 = "required" -> null
+          - instance_metadata_tags      = "disabled" -> null
+        }
+
+      ~ network_interface (known after apply)
+
+      ~ private_dns_name_options (known after apply)
+      - private_dns_name_options {
+          - enable_resource_name_dns_a_record    = false -> null
+          - enable_resource_name_dns_aaaa_record = false -> null
+          - hostname_type                        = "ip-name" -> null
+        }
+
+      ~ root_block_device {
+          ~ device_name           = "/dev/sda1" -> (known after apply)
+          ~ iops                  = 3000 -> (known after apply)
+          ~ kms_key_id            = "arn:aws:kms:ap-south-1:889149079394:key/6d389fc9-b983-4332-b59d-1392a0a91c75" -> (known after apply)
+          - tags                  = {} -> null
+          ~ tags_all              = {} -> (known after apply)
+          ~ throughput            = 125 -> (known after apply)
+          ~ volume_id             = "vol-06291297e5f97f070" -> (known after apply)
+            # (4 unchanged attributes hidden)
+        }
+    }
+
+Plan: 2 to add, 0 to change, 2 to destroy.
+
+Changes to Outputs:
+  ~ backend_public_ip  = "13.201.67.133" -> (known after apply)
+  ~ backend_url        = "http://13.201.67.133:5000" -> (known after apply)
+  ~ frontend_public_ip = "13.232.35.133" -> (known after apply)
+  ~ frontend_url       = "http://13.232.35.133:3000" -> (known after apply)
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+module.frontend.aws_instance.this: Destroying... [id=i-0f7a6f940a692eec6]
+module.frontend.aws_instance.this: Still destroying... [id=i-0f7a6f940a692eec6, 00m10s elapsed]
+module.frontend.aws_instance.this: Destruction complete after 20s
+module.backend.aws_instance.this: Destroying... [id=i-0249396d50ab31f69]
+module.backend.aws_instance.this: Still destroying... [id=i-0249396d50ab31f69, 00m10s elapsed]
+module.backend.aws_instance.this: Still destroying... [id=i-0249396d50ab31f69, 00m20s elapsed]
+module.backend.aws_instance.this: Destruction complete after 30s
+module.backend.aws_instance.this: Creating...
+module.backend.aws_instance.this: Still creating... [00m10s elapsed]
+module.backend.aws_instance.this: Creation complete after 12s [id=i-03e654b241d577a0e]
+module.frontend.aws_instance.this: Creating...
+module.frontend.aws_instance.this: Still creating... [00m10s elapsed]
+module.frontend.aws_instance.this: Creation complete after 13s [id=i-04f06c3a9085c2a67]
+
+Apply complete! Resources: 2 added, 0 changed, 2 destroyed.
+
+Outputs:
+
+backend_public_ip = "13.201.70.205"
+backend_url = "http://13.201.70.205:5000"
+frontend_public_ip = "52.66.199.76"
+frontend_url = "http://52.66.199.76:3000"
+azhar@azhar9983:~/tutedude/Terraform_Azharuddin_Ansari/terraform-task-2$ 
+azhar@azhar9983:~/tutedude/Terraform_Azharuddin_Ansari/terraform-task-2$ tf apply
+data.aws_ami.ubuntu: Reading...
+module.network.aws_vpc.this: Refreshing state... [id=vpc-0e9c745d7e8577965]
+data.aws_ami.ubuntu: Read complete after 0s [id=ami-083cf4acad89c8905]
+module.network.aws_security_group.frontend: Refreshing state... [id=sg-09b6fdc7e6ed3bc2f]
+module.network.aws_internet_gateway.this: Refreshing state... [id=igw-030a609a99b9da949]
+module.network.aws_subnet.public: Refreshing state... [id=subnet-04dedc801180e67d0]
+module.network.aws_security_group.backend: Refreshing state... [id=sg-0940cd9dfa98cd028]
+module.network.aws_route_table.public: Refreshing state... [id=rtb-0fc030f042d1a847f]
+module.network.aws_route_table_association.public: Refreshing state... [id=rtbassoc-0df1e91784b12e21a]
+module.backend.aws_instance.this: Refreshing state... [id=i-03e654b241d577a0e]
+module.frontend.aws_instance.this: Refreshing state... [id=i-04f06c3a9085c2a67]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  ~ update in-place
+-/+ destroy and then create replacement
+
+Terraform will perform the following actions:
+
+  # module.backend.aws_instance.this must be replaced
+-/+ resource "aws_instance" "this" {
+      ~ arn                                  = "arn:aws:ec2:ap-south-1:889149079394:instance/i-03e654b241d577a0e" -> (known after apply)
+      ~ associate_public_ip_address          = true -> (known after apply)
+      ~ availability_zone                    = "ap-south-1a" -> (known after apply)
+      ~ cpu_core_count                       = 1 -> (known after apply)
+      ~ cpu_threads_per_core                 = 2 -> (known after apply)
+      ~ disable_api_stop                     = false -> (known after apply)
+      ~ disable_api_termination              = false -> (known after apply)
+      ~ ebs_optimized                        = false -> (known after apply)
+      + enable_primary_ipv6                  = (known after apply)
+      - hibernation                          = false -> null
+      + host_id                              = (known after apply)
+      + host_resource_group_arn              = (known after apply)
+      + iam_instance_profile                 = (known after apply)
+      ~ id                                   = "i-03e654b241d577a0e" -> (known after apply)
+      ~ instance_initiated_shutdown_behavior = "stop" -> (known after apply)
+      + instance_lifecycle                   = (known after apply)
+      ~ instance_state                       = "running" -> (known after apply)
+      ~ ipv6_address_count                   = 0 -> (known after apply)
+      ~ ipv6_addresses                       = [] -> (known after apply)
+      ~ monitoring                           = false -> (known after apply)
+      + outpost_arn                          = (known after apply)
+      + password_data                        = (known after apply)
+      + placement_group                      = (known after apply)
+      ~ placement_partition_number           = 0 -> (known after apply)
+      ~ primary_network_interface_id         = "eni-0990091fac57383c9" -> (known after apply)
+      ~ private_dns                          = "ip-10-20-1-35.ap-south-1.compute.internal" -> (known after apply)
+      ~ private_ip                           = "10.20.1.35" -> (known after apply)
+      ~ public_dns                           = "ec2-13-201-70-205.ap-south-1.compute.amazonaws.com" -> (known after apply)
+      ~ public_ip                            = "13.201.70.205" -> (known after apply)
+      ~ secondary_private_ips                = [] -> (known after apply)
+      ~ security_groups                      = [] -> (known after apply)
+      + spot_instance_request_id             = (known after apply)
+        tags                                 = {
+            "Name" = "flask-express-backend"
+        }
+      ~ tenancy                              = "default" -> (known after apply)
+      ~ user_data                            = "259961a2aecd009ce2103ec92893922ca4dac7d1" -> "ad026a2daf0a58b7de4a9a3a342a9ca395d21ee2" # forces replacement
+      + user_data_base64                     = (known after apply)
+        # (9 unchanged attributes hidden)
+
+      ~ capacity_reservation_specification (known after apply)
+      - capacity_reservation_specification {
+          - capacity_reservation_preference = "open" -> null
+        }
+
+      ~ cpu_options (known after apply)
+      - cpu_options {
+          - core_count       = 1 -> null
+          - threads_per_core = 2 -> null
+            # (1 unchanged attribute hidden)
+        }
+
+      - credit_specification {
+          - cpu_credits = "unlimited" -> null
+        }
+
+      ~ ebs_block_device (known after apply)
+
+      ~ enclave_options (known after apply)
+      - enclave_options {
+          - enabled = false -> null
+        }
+
+      ~ ephemeral_block_device (known after apply)
+
+      ~ instance_market_options (known after apply)
+
+      ~ maintenance_options (known after apply)
+      - maintenance_options {
+          - auto_recovery = "default" -> null
+        }
+
+      ~ metadata_options (known after apply)
+      - metadata_options {
+          - http_endpoint               = "enabled" -> null
+          - http_protocol_ipv6          = "disabled" -> null
+          - http_put_response_hop_limit = 2 -> null
+          - http_tokens                 = "required" -> null
+          - instance_metadata_tags      = "disabled" -> null
+        }
+
+      ~ network_interface (known after apply)
+
+      ~ private_dns_name_options (known after apply)
+      - private_dns_name_options {
+          - enable_resource_name_dns_a_record    = false -> null
+          - enable_resource_name_dns_aaaa_record = false -> null
+          - hostname_type                        = "ip-name" -> null
+        }
+
+      ~ root_block_device {
+          ~ device_name           = "/dev/sda1" -> (known after apply)
+          ~ iops                  = 3000 -> (known after apply)
+          ~ kms_key_id            = "arn:aws:kms:ap-south-1:889149079394:key/6d389fc9-b983-4332-b59d-1392a0a91c75" -> (known after apply)
+          - tags                  = {} -> null
+          ~ tags_all              = {} -> (known after apply)
+          ~ throughput            = 125 -> (known after apply)
+          ~ volume_id             = "vol-08781e701c46d01dc" -> (known after apply)
+            # (4 unchanged attributes hidden)
+        }
+    }
+
+  # module.frontend.aws_instance.this must be replaced
+-/+ resource "aws_instance" "this" {
+      ~ arn                                  = "arn:aws:ec2:ap-south-1:889149079394:instance/i-04f06c3a9085c2a67" -> (known after apply)
+      ~ associate_public_ip_address          = true -> (known after apply)
+      ~ availability_zone                    = "ap-south-1a" -> (known after apply)
+      ~ cpu_core_count                       = 1 -> (known after apply)
+      ~ cpu_threads_per_core                 = 2 -> (known after apply)
+      ~ disable_api_stop                     = false -> (known after apply)
+      ~ disable_api_termination              = false -> (known after apply)
+      ~ ebs_optimized                        = false -> (known after apply)
+      + enable_primary_ipv6                  = (known after apply)
+      - hibernation                          = false -> null
+      + host_id                              = (known after apply)
+      + host_resource_group_arn              = (known after apply)
+      + iam_instance_profile                 = (known after apply)
+      ~ id                                   = "i-04f06c3a9085c2a67" -> (known after apply)
+      ~ instance_initiated_shutdown_behavior = "stop" -> (known after apply)
+      + instance_lifecycle                   = (known after apply)
+      ~ instance_state                       = "running" -> (known after apply)
+      ~ ipv6_address_count                   = 0 -> (known after apply)
+      ~ ipv6_addresses                       = [] -> (known after apply)
+      ~ monitoring                           = false -> (known after apply)
+      + outpost_arn                          = (known after apply)
+      + password_data                        = (known after apply)
+      + placement_group                      = (known after apply)
+      ~ placement_partition_number           = 0 -> (known after apply)
+      ~ primary_network_interface_id         = "eni-06561a17c352baf66" -> (known after apply)
+      ~ private_dns                          = "ip-10-20-1-73.ap-south-1.compute.internal" -> (known after apply)
+      ~ private_ip                           = "10.20.1.73" -> (known after apply)
+      ~ public_dns                           = "ec2-52-66-199-76.ap-south-1.compute.amazonaws.com" -> (known after apply)
+      ~ public_ip                            = "52.66.199.76" -> (known after apply)
+      ~ secondary_private_ips                = [] -> (known after apply)
+      ~ security_groups                      = [] -> (known after apply)
+      + spot_instance_request_id             = (known after apply)
+        tags                                 = {
+            "Name" = "flask-express-frontend"
+        }
+      ~ tenancy                              = "default" -> (known after apply)
+      ~ user_data                            = "2eeb24a2a02ed15529686c8674ea60609278a52b" -> (known after apply) # forces replacement
+      + user_data_base64                     = (known after apply)
+        # (9 unchanged attributes hidden)
+
+      ~ capacity_reservation_specification (known after apply)
+      - capacity_reservation_specification {
+          - capacity_reservation_preference = "open" -> null
+        }
+
+      ~ cpu_options (known after apply)
+      - cpu_options {
+          - core_count       = 1 -> null
+          - threads_per_core = 2 -> null
+            # (1 unchanged attribute hidden)
+        }
+
+      - credit_specification {
+          - cpu_credits = "unlimited" -> null
+        }
+
+      ~ ebs_block_device (known after apply)
+
+      ~ enclave_options (known after apply)
+      - enclave_options {
+          - enabled = false -> null
+        }
+
+      ~ ephemeral_block_device (known after apply)
+
+      ~ instance_market_options (known after apply)
+
+      ~ maintenance_options (known after apply)
+      - maintenance_options {
+          - auto_recovery = "default" -> null
+        }
+
+      ~ metadata_options (known after apply)
+      - metadata_options {
+          - http_endpoint               = "enabled" -> null
+          - http_protocol_ipv6          = "disabled" -> null
+          - http_put_response_hop_limit = 2 -> null
+          - http_tokens                 = "required" -> null
+          - instance_metadata_tags      = "disabled" -> null
+        }
+
+      ~ network_interface (known after apply)
+
+      ~ private_dns_name_options (known after apply)
+      - private_dns_name_options {
+          - enable_resource_name_dns_a_record    = false -> null
+          - enable_resource_name_dns_aaaa_record = false -> null
+          - hostname_type                        = "ip-name" -> null
+        }
+
+      ~ root_block_device {
+          ~ device_name           = "/dev/sda1" -> (known after apply)
+          ~ iops                  = 3000 -> (known after apply)
+          ~ kms_key_id            = "arn:aws:kms:ap-south-1:889149079394:key/6d389fc9-b983-4332-b59d-1392a0a91c75" -> (known after apply)
+          - tags                  = {} -> null
+          ~ tags_all              = {} -> (known after apply)
+          ~ throughput            = 125 -> (known after apply)
+          ~ volume_id             = "vol-087d0b43e77190d9c" -> (known after apply)
+            # (4 unchanged attributes hidden)
+        }
+    }
+
+  # module.network.aws_security_group.backend will be updated in-place
+  ~ resource "aws_security_group" "backend" {
+        id                     = "sg-0940cd9dfa98cd028"
+      ~ ingress                = [
+          + {
+              + cidr_blocks      = []
+              + description      = "Flask API from frontend instance"
+              + from_port        = 5000
+              + ipv6_cidr_blocks = []
+              + prefix_list_ids  = []
+              + protocol         = "tcp"
+              + security_groups  = [
+                  + "sg-09b6fdc7e6ed3bc2f",
+                ]
+              + self             = false
+              + to_port          = 5000
+            },
+            # (1 unchanged element hidden)
+        ]
+        name                   = "flask-express-backend"
+        tags                   = {
+            "Name" = "flask-express-backend"
+        }
+        # (8 unchanged attributes hidden)
+    }
+
+Plan: 2 to add, 1 to change, 2 to destroy.
+
+Changes to Outputs:
+  ~ backend_public_ip  = "13.201.70.205" -> (known after apply)
+  ~ backend_url        = "http://13.201.70.205:5000" -> (known after apply)
+  ~ frontend_public_ip = "52.66.199.76" -> (known after apply)
+  ~ frontend_url       = "http://52.66.199.76:3000" -> (known after apply)
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+module.frontend.aws_instance.this: Destroying... [id=i-04f06c3a9085c2a67]
+module.frontend.aws_instance.this: Still destroying... [id=i-04f06c3a9085c2a67, 00m10s elapsed]
+module.frontend.aws_instance.this: Destruction complete after 20s
+module.backend.aws_instance.this: Destroying... [id=i-03e654b241d577a0e]
+module.backend.aws_instance.this: Still destroying... [id=i-03e654b241d577a0e, 00m10s elapsed]
+module.backend.aws_instance.this: Still destroying... [id=i-03e654b241d577a0e, 00m20s elapsed]
+module.backend.aws_instance.this: Destruction complete after 30s
+module.network.aws_security_group.backend: Modifying... [id=sg-0940cd9dfa98cd028]
+module.network.aws_security_group.backend: Modifications complete after 1s [id=sg-0940cd9dfa98cd028]
+module.backend.aws_instance.this: Creating...
+module.backend.aws_instance.this: Still creating... [00m10s elapsed]
+module.backend.aws_instance.this: Creation complete after 12s [id=i-0fd9e5bb466959efc]
+module.frontend.aws_instance.this: Creating...
+module.frontend.aws_instance.this: Still creating... [00m10s elapsed]
+module.frontend.aws_instance.this: Creation complete after 12s [id=i-0aeec23c93d8e57bd]
+
+Apply complete! Resources: 2 added, 1 changed, 2 destroyed.
+
+Outputs:
+
+backend_public_ip = "13.127.18.39"
+backend_url = "http://13.127.18.39:5000"
+frontend_public_ip = "13.233.250.252"
+frontend_url = "http://13.233.250.252:3000"

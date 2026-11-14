@@ -10,7 +10,7 @@ variable "secret_key" {
 variable "aws_region" {
   description = "AWS region containing an Ubuntu 26.04 AMI."
   type        = string
-  default     = "us-east-1"
+  default     = "ap-south-1"
 }
 
 variable "app_repo" {
@@ -27,7 +27,7 @@ variable "instance_type" {
 variable "key_name" {
   description = "Optional EC2 key pair name for SSH access."
   type        = string
-  default     = "tf-key"
+  default     = "new-key"
 }
 
 variable "ssh_cidr" {
