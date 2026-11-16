@@ -357,3 +357,999 @@ public.ecr.aws/w6g4t0c6/flask-node-app-flask-backend:latest                     
 public.ecr.aws/w6g4t0c6/flask-node-app-node-frontend:latest                                           55c3f672cf08        1.8GB          448MB        
 azhar@azhar9983:~/tutedude/Terraform_Azharuddin_Ansari/terraform-task-3$ 
 
+aws_subnet.public[0]: Creation complete after 11s [id=subnet-0fe771d1a383fba66]
+aws_route_table_association.public[1]: Creating...
+aws_route_table_association.public[0]: Creating...
+aws_lb.main: Creating...
+aws_route_table_association.public[1]: Creation complete after 1s [id=rtbassoc-03c43d2df2cf67b88]
+aws_route_table_association.public[0]: Creation complete after 1s [id=rtbassoc-09bd2364b0a3eecf8]
+aws_lb_target_group.frontend: Destruction complete after 17s
+aws_lb_target_group.frontend: Creating...
+aws_lb_target_group.frontend: Creation complete after 1s [id=arn:aws:elasticloadbalancing:ap-south-1:889149079394:targetgroup/flask-express-express-tg/c71d3aa0c2f7c2e6]
+aws_lb_target_group.backend: Destruction complete after 19s
+aws_lb_target_group.backend: Creating...
+aws_lb_target_group.backend: Creation complete after 1s [id=arn:aws:elasticloadbalancing:ap-south-1:889149079394:targetgroup/flask-express-flask-tg/9550bff51a717c6f]
+aws_lb.main: Still creating... [00m10s elapsed]
+aws_lb.main: Still creating... [00m20s elapsed]
+aws_lb.main: Still creating... [00m30s elapsed]
+aws_lb.main: Still creating... [00m40s elapsed]
+aws_lb.main: Still creating... [00m50s elapsed]
+aws_lb.main: Still creating... [01m00s elapsed]
+aws_lb.main: Still creating... [01m10s elapsed]
+aws_lb.main: Still creating... [01m20s elapsed]
+aws_lb.main: Still creating... [01m30s elapsed]
+aws_lb.main: Still creating... [01m40s elapsed]
+aws_lb.main: Still creating... [01m50s elapsed]
+aws_lb.main: Still creating... [02m00s elapsed]
+aws_lb.main: Still creating... [02m10s elapsed]
+aws_lb.main: Creation complete after 2m12s [id=arn:aws:elasticloadbalancing:ap-south-1:889149079394:loadbalancer/app/flask-express-alb/4f58408ba27a546c]
+aws_lb_listener.http: Creating...
+aws_lb_listener.http: Creation complete after 0s [id=arn:aws:elasticloadbalancing:ap-south-1:889149079394:listener/app/flask-express-alb/4f58408ba27a546c/afa3daa06629f1b7]
+aws_lb_listener_rule.api: Creating...
+aws_ecs_service.frontend: Creating...
+aws_lb_listener_rule.api: Creation complete after 0s [id=arn:aws:elasticloadbalancing:ap-south-1:889149079394:listener-rule/app/flask-express-alb/4f58408ba27a546c/afa3daa06629f1b7/b2e55eeea5a0ded7]
+aws_ecs_service.backend: Creating...
+aws_ecs_service.frontend: Creation complete after 1s [id=arn:aws:ecs:ap-south-1:889149079394:service/flask-express-cluster/flask-express-express-svc]
+aws_ecs_service.backend: Creation complete after 1s [id=arn:aws:ecs:ap-south-1:889149079394:service/flask-express-cluster/flask-express-flask-svc]
+
+Apply complete! Resources: 24 added, 0 changed, 2 destroyed.
+
+Outputs:
+
+alb_dns_name = "flask-express-alb-1502811336.ap-south-1.elb.amazonaws.com"
+backend_ecr_repository_url = "889149079394.dkr.ecr.ap-south-1.amazonaws.com/flask-express-flask-backend"
+ecs_cluster_name = "flask-express-cluster"
+frontend_ecr_repository_url = "889149079394.dkr.ecr.ap-south-1.amazonaws.com/flask-express-express-frontend"
+vpc_id = "vpc-07baa8a03ce84820d"
+azhar@azhar9983:~/tutedude/Terraform_Azharuddin_Ansari/terraform-task-3$ terraform apply
+╷
+│ Error: Inconsistent dependency lock file
+│ 
+│ The following dependency selections recorded in the lock file are inconsistent with the current configuration:
+│   - provider registry.terraform.io/hashicorp/null: required by this configuration but no version is selected
+│ 
+│ To update the locked dependency selections to match a changed configuration, run:
+│   terraform init -upgrade
+╵
+azhar@azhar9983:~/tutedude/Terraform_Azharuddin_Ansari/terraform-task-3$ terraform init -upgrade
+Initializing the backend...
+
+Initializing provider plugins...
+- Finding hashicorp/aws versions matching "~> 5.0"...
+- Finding latest version of hashicorp/null...
+- Using previously-installed hashicorp/aws v5.100.0
+- Installing hashicorp/null v3.3.2...
+- Installed hashicorp/null v3.3.2 (signed by HashiCorp)
+
+Terraform has made some changes to the provider dependency selections recorded
+in the .terraform.lock.hcl file. Review those changes and commit them to your
+version control system if they represent changes you intended to make.
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+azhar@azhar9983:~/tutedude/Terraform_Azharuddin_Ansari/terraform-task-3$ terraform apply --auto-approve
+data.aws_iam_policy_document.ecs_assume: Reading...
+aws_cloudwatch_log_group.frontend: Refreshing state... [id=/ecs/flask-express-express]
+aws_ecr_repository.backend: Refreshing state... [id=flask-express-flask-backend]
+aws_cloudwatch_log_group.backend: Refreshing state... [id=/ecs/flask-express-flask]
+data.aws_availability_zones.available: Reading...
+aws_vpc.main: Refreshing state... [id=vpc-07baa8a03ce84820d]
+aws_ecr_repository.frontend: Refreshing state... [id=flask-express-express-frontend]
+aws_ecs_cluster.main: Refreshing state... [id=arn:aws:ecs:ap-south-1:889149079394:cluster/flask-express-cluster]
+data.aws_iam_policy_document.ecs_assume: Read complete after 0s [id=1077804475]
+aws_iam_role.task_execution: Refreshing state... [id=flask-express-task-exec-role]
+data.aws_availability_zones.available: Read complete after 1s [id=ap-south-1]
+aws_subnet.public[1]: Refreshing state... [id=subnet-0184b86473a671ec2]
+aws_internet_gateway.igw: Refreshing state... [id=igw-06b951b2902ff834c]
+aws_security_group.alb: Refreshing state... [id=sg-0cd748cfeeda0b8db]
+aws_subnet.public[0]: Refreshing state... [id=subnet-0fe771d1a383fba66]
+aws_lb_target_group.backend: Refreshing state... [id=arn:aws:elasticloadbalancing:ap-south-1:889149079394:targetgroup/flask-express-flask-tg/9550bff51a717c6f]
+aws_lb_target_group.frontend: Refreshing state... [id=arn:aws:elasticloadbalancing:ap-south-1:889149079394:targetgroup/flask-express-express-tg/c71d3aa0c2f7c2e6]
+aws_route_table.public: Refreshing state... [id=rtb-0302513599b3e4410]
+aws_route_table_association.public[1]: Refreshing state... [id=rtbassoc-03c43d2df2cf67b88]
+aws_route_table_association.public[0]: Refreshing state... [id=rtbassoc-09bd2364b0a3eecf8]
+aws_security_group.ecs_tasks: Refreshing state... [id=sg-063c16fd6cba86bdd]
+aws_lb.main: Refreshing state... [id=arn:aws:elasticloadbalancing:ap-south-1:889149079394:loadbalancer/app/flask-express-alb/4f58408ba27a546c]
+aws_lb_listener.http: Refreshing state... [id=arn:aws:elasticloadbalancing:ap-south-1:889149079394:listener/app/flask-express-alb/4f58408ba27a546c/afa3daa06629f1b7]
+aws_lb_listener_rule.api: Refreshing state... [id=arn:aws:elasticloadbalancing:ap-south-1:889149079394:listener-rule/app/flask-express-alb/4f58408ba27a546c/afa3daa06629f1b7/b2e55eeea5a0ded7]
+aws_iam_role_policy_attachment.task_execution: Refreshing state... [id=flask-express-task-exec-role-20261116160806405800000002]
+aws_ecs_task_definition.backend: Refreshing state... [id=flask-express-flask]
+aws_ecs_task_definition.frontend: Refreshing state... [id=flask-express-express]
+aws_ecs_service.backend: Refreshing state... [id=arn:aws:ecs:ap-south-1:889149079394:service/flask-express-cluster/flask-express-flask-svc]
+aws_ecs_service.frontend: Refreshing state... [id=arn:aws:ecs:ap-south-1:889149079394:service/flask-express-cluster/flask-express-express-svc]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+  ~ update in-place
+-/+ destroy and then create replacement
+
+Terraform will perform the following actions:
+
+  # aws_ecr_repository.backend must be replaced
+-/+ resource "aws_ecr_repository" "backend" {
+      ~ arn                  = "arn:aws:ecr:ap-south-1:889149079394:repository/flask-express-flask-backend" -> (known after apply)
+      ~ id                   = "flask-express-flask-backend" -> (known after apply)
+      ~ name                 = "flask-express-flask-backend" -> "backend" # forces replacement
+      ~ registry_id          = "889149079394" -> (known after apply)
+      ~ repository_url       = "889149079394.dkr.ecr.ap-south-1.amazonaws.com/flask-express-flask-backend" -> (known after apply)
+      - tags                 = {} -> null
+      ~ tags_all             = {} -> (known after apply)
+        # (2 unchanged attributes hidden)
+
+      - encryption_configuration {
+          - encryption_type = "AES256" -> null
+            # (1 unchanged attribute hidden)
+        }
+
+      ~ image_scanning_configuration {
+          ~ scan_on_push = true -> false
+        }
+    }
+
+  # aws_ecr_repository.frontend must be replaced
+-/+ resource "aws_ecr_repository" "frontend" {
+      ~ arn                  = "arn:aws:ecr:ap-south-1:889149079394:repository/flask-express-express-frontend" -> (known after apply)
+      ~ id                   = "flask-express-express-frontend" -> (known after apply)
+      ~ name                 = "flask-express-express-frontend" -> "frontend" # forces replacement
+      ~ registry_id          = "889149079394" -> (known after apply)
+      ~ repository_url       = "889149079394.dkr.ecr.ap-south-1.amazonaws.com/flask-express-express-frontend" -> (known after apply)
+      - tags                 = {} -> null
+      ~ tags_all             = {} -> (known after apply)
+        # (2 unchanged attributes hidden)
+
+      - encryption_configuration {
+          - encryption_type = "AES256" -> null
+            # (1 unchanged attribute hidden)
+        }
+
+      ~ image_scanning_configuration {
+          ~ scan_on_push = true -> false
+        }
+    }
+
+  # aws_ecs_service.backend will be updated in-place
+  ~ resource "aws_ecs_service" "backend" {
+        id                                 = "arn:aws:ecs:ap-south-1:889149079394:service/flask-express-cluster/flask-express-flask-svc"
+        name                               = "flask-express-flask-svc"
+        tags                               = {}
+      ~ task_definition                    = "arn:aws:ecs:ap-south-1:889149079394:task-definition/flask-express-flask:4" -> (known after apply)
+        # (16 unchanged attributes hidden)
+
+        # (4 unchanged blocks hidden)
+    }
+
+  # aws_ecs_service.frontend will be updated in-place
+  ~ resource "aws_ecs_service" "frontend" {
+        id                                 = "arn:aws:ecs:ap-south-1:889149079394:service/flask-express-cluster/flask-express-express-svc"
+        name                               = "flask-express-express-svc"
+        tags                               = {}
+      ~ task_definition                    = "arn:aws:ecs:ap-south-1:889149079394:task-definition/flask-express-express:4" -> (known after apply)
+        # (16 unchanged attributes hidden)
+
+        # (4 unchanged blocks hidden)
+    }
+
+  # aws_ecs_task_definition.backend must be replaced
+-/+ resource "aws_ecs_task_definition" "backend" {
+      ~ arn                      = "arn:aws:ecs:ap-south-1:889149079394:task-definition/flask-express-flask:4" -> (known after apply)
+      ~ arn_without_revision     = "arn:aws:ecs:ap-south-1:889149079394:task-definition/flask-express-flask" -> (known after apply)
+      ~ container_definitions    = jsonencode(
+            [
+              - {
+                  - environment      = []
+                  - essential        = true
+                  - image            = "889149079394.dkr.ecr.ap-south-1.amazonaws.com/flask-express-flask-backend:latest"
+                  - logConfiguration = {
+                      - logDriver = "awslogs"
+                      - options   = {
+                          - awslogs-group         = "/ecs/flask-express-flask"
+                          - awslogs-region        = "ap-south-1"
+                          - awslogs-stream-prefix = "flask"
+                        }
+                    }
+                  - mountPoints      = []
+                  - name             = "flask"
+                  - portMappings     = [
+                      - {
+                          - containerPort = 5000
+                          - hostPort      = 5000
+                          - protocol      = "tcp"
+                        },
+                    ]
+                  - systemControls   = []
+                  - volumesFrom      = []
+                },
+            ]
+        ) -> (known after apply) # forces replacement
+      ~ enable_fault_injection   = false -> (known after apply)
+      ~ id                       = "flask-express-flask" -> (known after apply)
+      ~ revision                 = 4 -> (known after apply)
+      - tags                     = {} -> null
+      ~ tags_all                 = {} -> (known after apply)
+        # (11 unchanged attributes hidden)
+
+        # (1 unchanged block hidden)
+    }
+
+  # aws_ecs_task_definition.frontend must be replaced
+-/+ resource "aws_ecs_task_definition" "frontend" {
+      ~ arn                      = "arn:aws:ecs:ap-south-1:889149079394:task-definition/flask-express-express:4" -> (known after apply)
+      ~ arn_without_revision     = "arn:aws:ecs:ap-south-1:889149079394:task-definition/flask-express-express" -> (known after apply)
+      ~ container_definitions    = jsonencode(
+            [
+              - {
+                  - environment      = []
+                  - essential        = true
+                  - image            = "889149079394.dkr.ecr.ap-south-1.amazonaws.com/flask-express-express-frontend:latest"
+                  - logConfiguration = {
+                      - logDriver = "awslogs"
+                      - options   = {
+                          - awslogs-group         = "/ecs/flask-express-express"
+                          - awslogs-region        = "ap-south-1"
+                          - awslogs-stream-prefix = "express"
+                        }
+                    }
+                  - mountPoints      = []
+                  - name             = "express"
+                  - portMappings     = [
+                      - {
+                          - containerPort = 3000
+                          - hostPort      = 3000
+                          - protocol      = "tcp"
+                        },
+                    ]
+                  - systemControls   = []
+                  - volumesFrom      = []
+                },
+            ]
+        ) -> (known after apply) # forces replacement
+      ~ enable_fault_injection   = false -> (known after apply)
+      ~ id                       = "flask-express-express" -> (known after apply)
+      ~ revision                 = 4 -> (known after apply)
+      - tags                     = {} -> null
+      ~ tags_all                 = {} -> (known after apply)
+        # (11 unchanged attributes hidden)
+
+        # (1 unchanged block hidden)
+    }
+
+  # null_resource.build_and_push_backend will be created
+  + resource "null_resource" "build_and_push_backend" {
+      + id       = (known after apply)
+      + triggers = {
+          + "dockerfile_hash" = "ULreFGknAv/E6K/N0HQuBlEXqaxbG9K1Oat0wEAdd80="
+        }
+    }
+
+  # null_resource.build_and_push_frontend will be created
+  + resource "null_resource" "build_and_push_frontend" {
+      + id       = (known after apply)
+      + triggers = {
+          + "dockerfile_hash" = "hIUkf1GECAzvWQTg7vmE/L5EHE1aY/U196kO9RWw3dM="
+        }
+    }
+
+Plan: 6 to add, 2 to change, 4 to destroy.
+
+Changes to Outputs:
+  ~ backend_ecr_repository_url  = "889149079394.dkr.ecr.ap-south-1.amazonaws.com/flask-express-flask-backend" -> (known after apply)
+  ~ frontend_ecr_repository_url = "889149079394.dkr.ecr.ap-south-1.amazonaws.com/flask-express-express-frontend" -> (known after apply)
+aws_ecs_task_definition.backend: Destroying... [id=flask-express-flask]
+aws_ecs_task_definition.frontend: Destroying... [id=flask-express-express]
+aws_ecs_task_definition.frontend: Destruction complete after 0s
+aws_ecr_repository.frontend: Destroying... [id=flask-express-express-frontend]
+aws_ecs_task_definition.backend: Destruction complete after 0s
+aws_ecr_repository.backend: Destroying... [id=flask-express-flask-backend]
+aws_ecr_repository.frontend: Destruction complete after 0s
+aws_ecr_repository.frontend: Creating...
+aws_ecr_repository.backend: Destruction complete after 0s
+aws_ecr_repository.backend: Creating...
+╷
+│ Error: creating ECR Repository (frontend): operation error ECR: CreateRepository, https response error StatusCode: 400, RequestID: d8bd4f86-5bc4-49ff-b00c-363544dfd814, RepositoryAlreadyExistsException: The repository with name 'frontend' already exists in the registry with id '889149079394'
+│ 
+│   with aws_ecr_repository.frontend,
+│   on ecr.tf line 1, in resource "aws_ecr_repository" "frontend":
+│    1: resource "aws_ecr_repository" "frontend" {
+│ 
+╵
+╷
+│ Error: creating ECR Repository (backend): operation error ECR: CreateRepository, https response error StatusCode: 400, RequestID: 878d6889-f4c5-4262-8b59-d0be6ad1a42c, RepositoryAlreadyExistsException: The repository with name 'backend' already exists in the registry with id '889149079394'
+│ 
+│   with aws_ecr_repository.backend,
+│   on ecr.tf line 27, in resource "aws_ecr_repository" "backend":
+│   27: resource "aws_ecr_repository" "backend" {
+│ 
+╵
+azhar@azhar9983:~/tutedude/Terraform_Azharuddin_Ansari/terraform-task-3$ terraform init
+Initializing the backend...
+
+Initializing provider plugins...
+- Reusing version 5.100.0 of hashicorp/aws from the dependency lock file
+- Reusing version 3.3.2 of hashicorp/null from the dependency lock file
+- Using previously-installed hashicorp/aws v5.100.0
+- Using previously-installed hashicorp/null v3.3.2
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+azhar@azhar9983:~/tutedude/Terraform_Azharuddin_Ansari/terraform-task-3$ terraform apply --auto-approve
+data.aws_availability_zones.available: Reading...
+data.aws_iam_policy_document.ecs_assume: Reading...
+aws_cloudwatch_log_group.frontend: Refreshing state... [id=/ecs/flask-express-express]
+aws_cloudwatch_log_group.backend: Refreshing state... [id=/ecs/flask-express-flask]
+aws_ecs_cluster.main: Refreshing state... [id=arn:aws:ecs:ap-south-1:889149079394:cluster/flask-express-cluster]
+aws_vpc.main: Refreshing state... [id=vpc-07baa8a03ce84820d]
+data.aws_iam_policy_document.ecs_assume: Read complete after 0s [id=1077804475]
+aws_iam_role.task_execution: Refreshing state... [id=flask-express-task-exec-role]
+data.aws_availability_zones.available: Read complete after 0s [id=ap-south-1]
+aws_security_group.alb: Refreshing state... [id=sg-0cd748cfeeda0b8db]
+aws_internet_gateway.igw: Refreshing state... [id=igw-06b951b2902ff834c]
+aws_subnet.public[0]: Refreshing state... [id=subnet-0fe771d1a383fba66]
+aws_lb_target_group.backend: Refreshing state... [id=arn:aws:elasticloadbalancing:ap-south-1:889149079394:targetgroup/flask-express-flask-tg/9550bff51a717c6f]
+aws_subnet.public[1]: Refreshing state... [id=subnet-0184b86473a671ec2]
+aws_lb_target_group.frontend: Refreshing state... [id=arn:aws:elasticloadbalancing:ap-south-1:889149079394:targetgroup/flask-express-express-tg/c71d3aa0c2f7c2e6]
+aws_security_group.ecs_tasks: Refreshing state... [id=sg-063c16fd6cba86bdd]
+aws_route_table.public: Refreshing state... [id=rtb-0302513599b3e4410]
+aws_route_table_association.public[1]: Refreshing state... [id=rtbassoc-03c43d2df2cf67b88]
+aws_route_table_association.public[0]: Refreshing state... [id=rtbassoc-09bd2364b0a3eecf8]
+aws_lb.main: Refreshing state... [id=arn:aws:elasticloadbalancing:ap-south-1:889149079394:loadbalancer/app/flask-express-alb/4f58408ba27a546c]
+aws_lb_listener.http: Refreshing state... [id=arn:aws:elasticloadbalancing:ap-south-1:889149079394:listener/app/flask-express-alb/4f58408ba27a546c/afa3daa06629f1b7]
+aws_lb_listener_rule.api: Refreshing state... [id=arn:aws:elasticloadbalancing:ap-south-1:889149079394:listener-rule/app/flask-express-alb/4f58408ba27a546c/afa3daa06629f1b7/b2e55eeea5a0ded7]
+aws_iam_role_policy_attachment.task_execution: Refreshing state... [id=flask-express-task-exec-role-20261116160806405800000002]
+aws_ecs_service.frontend: Refreshing state... [id=arn:aws:ecs:ap-south-1:889149079394:service/flask-express-cluster/flask-express-express-svc]
+aws_ecs_service.backend: Refreshing state... [id=arn:aws:ecs:ap-south-1:889149079394:service/flask-express-cluster/flask-express-flask-svc]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+  ~ update in-place
+
+Terraform will perform the following actions:
+
+  # aws_ecr_repository.backend will be created
+  + resource "aws_ecr_repository" "backend" {
+      + arn                  = (known after apply)
+      + force_delete         = true
+      + id                   = (known after apply)
+      + image_tag_mutability = "MUTABLE"
+      + name                 = "backend"
+      + registry_id          = (known after apply)
+      + repository_url       = (known after apply)
+      + tags_all             = (known after apply)
+
+      + image_scanning_configuration {
+          + scan_on_push = true
+        }
+    }
+
+  # aws_ecr_repository.frontend will be created
+  + resource "aws_ecr_repository" "frontend" {
+      + arn                  = (known after apply)
+      + force_delete         = true
+      + id                   = (known after apply)
+      + image_tag_mutability = "MUTABLE"
+      + name                 = "frontend"
+      + registry_id          = (known after apply)
+      + repository_url       = (known after apply)
+      + tags_all             = (known after apply)
+
+      + image_scanning_configuration {
+          + scan_on_push = true
+        }
+    }
+
+  # aws_ecs_service.backend will be updated in-place
+  ~ resource "aws_ecs_service" "backend" {
+        id                                 = "arn:aws:ecs:ap-south-1:889149079394:service/flask-express-cluster/flask-express-flask-svc"
+        name                               = "flask-express-flask-svc"
+        tags                               = {}
+      ~ task_definition                    = "arn:aws:ecs:ap-south-1:889149079394:task-definition/flask-express-flask:4" -> (known after apply)
+        # (16 unchanged attributes hidden)
+
+        # (4 unchanged blocks hidden)
+    }
+
+  # aws_ecs_service.frontend will be updated in-place
+  ~ resource "aws_ecs_service" "frontend" {
+        id                                 = "arn:aws:ecs:ap-south-1:889149079394:service/flask-express-cluster/flask-express-express-svc"
+        name                               = "flask-express-express-svc"
+        tags                               = {}
+      ~ task_definition                    = "arn:aws:ecs:ap-south-1:889149079394:task-definition/flask-express-express:4" -> (known after apply)
+        # (16 unchanged attributes hidden)
+
+        # (4 unchanged blocks hidden)
+    }
+
+  # aws_ecs_task_definition.backend will be created
+  + resource "aws_ecs_task_definition" "backend" {
+      + arn                      = (known after apply)
+      + arn_without_revision     = (known after apply)
+      + container_definitions    = (known after apply)
+      + cpu                      = "256"
+      + enable_fault_injection   = (known after apply)
+      + execution_role_arn       = "arn:aws:iam::889149079394:role/flask-express-task-exec-role"
+      + family                   = "flask-express-flask"
+      + id                       = (known after apply)
+      + memory                   = "512"
+      + network_mode             = "awsvpc"
+      + requires_compatibilities = [
+          + "FARGATE",
+        ]
+      + revision                 = (known after apply)
+      + skip_destroy             = false
+      + tags_all                 = (known after apply)
+      + track_latest             = false
+
+      + runtime_platform {
+          + cpu_architecture        = "X86_64"
+          + operating_system_family = "LINUX"
+        }
+    }
+
+  # aws_ecs_task_definition.frontend will be created
+  + resource "aws_ecs_task_definition" "frontend" {
+      + arn                      = (known after apply)
+      + arn_without_revision     = (known after apply)
+      + container_definitions    = (known after apply)
+      + cpu                      = "256"
+      + enable_fault_injection   = (known after apply)
+      + execution_role_arn       = "arn:aws:iam::889149079394:role/flask-express-task-exec-role"
+      + family                   = "flask-express-express"
+      + id                       = (known after apply)
+      + memory                   = "512"
+      + network_mode             = "awsvpc"
+      + requires_compatibilities = [
+          + "FARGATE",
+        ]
+      + revision                 = (known after apply)
+      + skip_destroy             = false
+      + tags_all                 = (known after apply)
+      + track_latest             = false
+
+      + runtime_platform {
+          + cpu_architecture        = "X86_64"
+          + operating_system_family = "LINUX"
+        }
+    }
+
+  # null_resource.build_and_push_backend will be created
+  + resource "null_resource" "build_and_push_backend" {
+      + id       = (known after apply)
+      + triggers = {
+          + "dockerfile_hash" = "ULreFGknAv/E6K/N0HQuBlEXqaxbG9K1Oat0wEAdd80="
+        }
+    }
+
+  # null_resource.build_and_push_frontend will be created
+  + resource "null_resource" "build_and_push_frontend" {
+      + id       = (known after apply)
+      + triggers = {
+          + "dockerfile_hash" = "hIUkf1GECAzvWQTg7vmE/L5EHE1aY/U196kO9RWw3dM="
+        }
+    }
+
+Plan: 6 to add, 2 to change, 0 to destroy.
+
+Changes to Outputs:
+  ~ backend_ecr_repository_url  = "889149079394.dkr.ecr.ap-south-1.amazonaws.com/flask-express-flask-backend" -> (known after apply)
+  ~ frontend_ecr_repository_url = "889149079394.dkr.ecr.ap-south-1.amazonaws.com/flask-express-express-frontend" -> (known after apply)
+aws_ecr_repository.frontend: Creating...
+aws_ecr_repository.backend: Creating...
+╷
+│ Error: creating ECR Repository (frontend): operation error ECR: CreateRepository, https response error StatusCode: 400, RequestID: fdc2e974-c8ab-4c00-8150-0bc655c14925, RepositoryAlreadyExistsException: The repository with name 'frontend' already exists in the registry with id '889149079394'
+│ 
+│   with aws_ecr_repository.frontend,
+│   on ecr.tf line 1, in resource "aws_ecr_repository" "frontend":
+│    1: resource "aws_ecr_repository" "frontend" {
+│ 
+╵
+╷
+│ Error: creating ECR Repository (backend): operation error ECR: CreateRepository, https response error StatusCode: 400, RequestID: 863f7d5b-c2f9-4cf9-ab79-d9df56a408fd, RepositoryAlreadyExistsException: The repository with name 'backend' already exists in the registry with id '889149079394'
+│ 
+│   with aws_ecr_repository.backend,
+│   on ecr.tf line 27, in resource "aws_ecr_repository" "backend":
+│   27: resource "aws_ecr_repository" "backend" {
+│ 
+╵
+azhar@azhar9983:~/tutedude/Terraform_Azharuddin_Ansari/terraform-task-3$ terraform init
+Initializing the backend...
+
+Initializing provider plugins...
+- Reusing version 5.100.0 of hashicorp/aws from the dependency lock file
+- Reusing version 3.3.2 of hashicorp/null from the dependency lock file
+- Using previously-installed hashicorp/aws v5.100.0
+- Using previously-installed hashicorp/null v3.3.2
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+azhar@azhar9983:~/tutedude/Terraform_Azharuddin_Ansari/terraform-task-3$ terraform init -upgrade
+Initializing the backend...
+
+Initializing provider plugins...
+- Finding hashicorp/aws versions matching "~> 5.0"...
+- Finding latest version of hashicorp/null...
+- Using previously-installed hashicorp/null v3.3.2
+- Using previously-installed hashicorp/aws v5.100.0
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+azhar@azhar9983:~/tutedude/Terraform_Azharuddin_Ansari/terraform-task-3$ terraform apply --auto-approve
+data.aws_availability_zones.available: Reading...
+data.aws_iam_policy_document.ecs_assume: Reading...
+aws_ecs_cluster.main: Refreshing state... [id=arn:aws:ecs:ap-south-1:889149079394:cluster/flask-express-cluster]
+aws_cloudwatch_log_group.backend: Refreshing state... [id=/ecs/flask-express-flask]
+aws_vpc.main: Refreshing state... [id=vpc-07baa8a03ce84820d]
+aws_cloudwatch_log_group.frontend: Refreshing state... [id=/ecs/flask-express-express]
+data.aws_iam_policy_document.ecs_assume: Read complete after 0s [id=1077804475]
+aws_iam_role.task_execution: Refreshing state... [id=flask-express-task-exec-role]
+data.aws_availability_zones.available: Read complete after 1s [id=ap-south-1]
+aws_subnet.public[1]: Refreshing state... [id=subnet-0184b86473a671ec2]
+aws_security_group.alb: Refreshing state... [id=sg-0cd748cfeeda0b8db]
+aws_internet_gateway.igw: Refreshing state... [id=igw-06b951b2902ff834c]
+aws_subnet.public[0]: Refreshing state... [id=subnet-0fe771d1a383fba66]
+aws_lb_target_group.backend: Refreshing state... [id=arn:aws:elasticloadbalancing:ap-south-1:889149079394:targetgroup/flask-express-flask-tg/9550bff51a717c6f]
+aws_lb_target_group.frontend: Refreshing state... [id=arn:aws:elasticloadbalancing:ap-south-1:889149079394:targetgroup/flask-express-express-tg/c71d3aa0c2f7c2e6]
+aws_route_table.public: Refreshing state... [id=rtb-0302513599b3e4410]
+aws_security_group.ecs_tasks: Refreshing state... [id=sg-063c16fd6cba86bdd]
+aws_lb.main: Refreshing state... [id=arn:aws:elasticloadbalancing:ap-south-1:889149079394:loadbalancer/app/flask-express-alb/4f58408ba27a546c]
+aws_route_table_association.public[1]: Refreshing state... [id=rtbassoc-03c43d2df2cf67b88]
+aws_route_table_association.public[0]: Refreshing state... [id=rtbassoc-09bd2364b0a3eecf8]
+aws_lb_listener.http: Refreshing state... [id=arn:aws:elasticloadbalancing:ap-south-1:889149079394:listener/app/flask-express-alb/4f58408ba27a546c/afa3daa06629f1b7]
+aws_lb_listener_rule.api: Refreshing state... [id=arn:aws:elasticloadbalancing:ap-south-1:889149079394:listener-rule/app/flask-express-alb/4f58408ba27a546c/afa3daa06629f1b7/b2e55eeea5a0ded7]
+aws_iam_role_policy_attachment.task_execution: Refreshing state... [id=flask-express-task-exec-role-20261116160806405800000002]
+aws_ecs_service.frontend: Refreshing state... [id=arn:aws:ecs:ap-south-1:889149079394:service/flask-express-cluster/flask-express-express-svc]
+aws_ecs_service.backend: Refreshing state... [id=arn:aws:ecs:ap-south-1:889149079394:service/flask-express-cluster/flask-express-flask-svc]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+  ~ update in-place
+
+Terraform will perform the following actions:
+
+  # aws_ecr_repository.backend will be created
+  + resource "aws_ecr_repository" "backend" {
+      + arn                  = (known after apply)
+      + force_delete         = true
+      + id                   = (known after apply)
+      + image_tag_mutability = "MUTABLE"
+      + name                 = "backend"
+      + registry_id          = (known after apply)
+      + repository_url       = (known after apply)
+      + tags_all             = (known after apply)
+
+      + image_scanning_configuration {
+          + scan_on_push = true
+        }
+    }
+
+  # aws_ecr_repository.frontend will be created
+  + resource "aws_ecr_repository" "frontend" {
+      + arn                  = (known after apply)
+      + force_delete         = true
+      + id                   = (known after apply)
+      + image_tag_mutability = "MUTABLE"
+      + name                 = "frontend"
+      + registry_id          = (known after apply)
+      + repository_url       = (known after apply)
+      + tags_all             = (known after apply)
+
+      + image_scanning_configuration {
+          + scan_on_push = true
+        }
+    }
+
+  # aws_ecs_service.backend will be updated in-place
+  ~ resource "aws_ecs_service" "backend" {
+        id                                 = "arn:aws:ecs:ap-south-1:889149079394:service/flask-express-cluster/flask-express-flask-svc"
+        name                               = "flask-express-flask-svc"
+        tags                               = {}
+      ~ task_definition                    = "arn:aws:ecs:ap-south-1:889149079394:task-definition/flask-express-flask:4" -> (known after apply)
+        # (16 unchanged attributes hidden)
+
+        # (4 unchanged blocks hidden)
+    }
+
+  # aws_ecs_service.frontend will be updated in-place
+  ~ resource "aws_ecs_service" "frontend" {
+        id                                 = "arn:aws:ecs:ap-south-1:889149079394:service/flask-express-cluster/flask-express-express-svc"
+        name                               = "flask-express-express-svc"
+        tags                               = {}
+      ~ task_definition                    = "arn:aws:ecs:ap-south-1:889149079394:task-definition/flask-express-express:4" -> (known after apply)
+        # (16 unchanged attributes hidden)
+
+        # (4 unchanged blocks hidden)
+    }
+
+  # aws_ecs_task_definition.backend will be created
+  + resource "aws_ecs_task_definition" "backend" {
+      + arn                      = (known after apply)
+      + arn_without_revision     = (known after apply)
+      + container_definitions    = (known after apply)
+      + cpu                      = "256"
+      + enable_fault_injection   = (known after apply)
+      + execution_role_arn       = "arn:aws:iam::889149079394:role/flask-express-task-exec-role"
+      + family                   = "flask-express-flask"
+      + id                       = (known after apply)
+      + memory                   = "512"
+      + network_mode             = "awsvpc"
+      + requires_compatibilities = [
+          + "FARGATE",
+        ]
+      + revision                 = (known after apply)
+      + skip_destroy             = false
+      + tags_all                 = (known after apply)
+      + track_latest             = false
+
+      + runtime_platform {
+          + cpu_architecture        = "X86_64"
+          + operating_system_family = "LINUX"
+        }
+    }
+
+  # aws_ecs_task_definition.frontend will be created
+  + resource "aws_ecs_task_definition" "frontend" {
+      + arn                      = (known after apply)
+      + arn_without_revision     = (known after apply)
+      + container_definitions    = (known after apply)
+      + cpu                      = "256"
+      + enable_fault_injection   = (known after apply)
+      + execution_role_arn       = "arn:aws:iam::889149079394:role/flask-express-task-exec-role"
+      + family                   = "flask-express-express"
+      + id                       = (known after apply)
+      + memory                   = "512"
+      + network_mode             = "awsvpc"
+      + requires_compatibilities = [
+          + "FARGATE",
+        ]
+      + revision                 = (known after apply)
+      + skip_destroy             = false
+      + tags_all                 = (known after apply)
+      + track_latest             = false
+
+      + runtime_platform {
+          + cpu_architecture        = "X86_64"
+          + operating_system_family = "LINUX"
+        }
+    }
+
+  # null_resource.build_and_push_backend will be created
+  + resource "null_resource" "build_and_push_backend" {
+      + id       = (known after apply)
+      + triggers = {
+          + "dockerfile_hash" = "ULreFGknAv/E6K/N0HQuBlEXqaxbG9K1Oat0wEAdd80="
+        }
+    }
+
+  # null_resource.build_and_push_frontend will be created
+  + resource "null_resource" "build_and_push_frontend" {
+      + id       = (known after apply)
+      + triggers = {
+          + "dockerfile_hash" = "hIUkf1GECAzvWQTg7vmE/L5EHE1aY/U196kO9RWw3dM="
+        }
+    }
+
+Plan: 6 to add, 2 to change, 0 to destroy.
+
+Changes to Outputs:
+  ~ backend_ecr_repository_url  = "889149079394.dkr.ecr.ap-south-1.amazonaws.com/flask-express-flask-backend" -> (known after apply)
+  ~ frontend_ecr_repository_url = "889149079394.dkr.ecr.ap-south-1.amazonaws.com/flask-express-express-frontend" -> (known after apply)
+aws_ecr_repository.backend: Creating...
+aws_ecr_repository.frontend: Creating...
+aws_ecr_repository.backend: Creation complete after 1s [id=backend]
+null_resource.build_and_push_backend: Creating...
+null_resource.build_and_push_backend: Provisioning with 'local-exec'...
+null_resource.build_and_push_backend (local-exec): Executing: ["/bin/sh" "-c" "aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 889149079394.dkr.ecr.ap-south-1.amazonaws.com/backend\ndocker build -t 889149079394.dkr.ecr.ap-south-1.amazonaws.com/backend:latest ./../flask-express-server/backend\ndocker push 889149079394.dkr.ecr.ap-south-1.amazonaws.com/backend:latest\n"]
+aws_ecs_task_definition.backend: Creating...
+aws_ecr_repository.frontend: Creation complete after 1s [id=frontend]
+null_resource.build_and_push_frontend: Creating...
+null_resource.build_and_push_frontend: Provisioning with 'local-exec'...
+null_resource.build_and_push_frontend (local-exec): Executing: ["/bin/sh" "-c" "aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 889149079394.dkr.ecr.ap-south-1.amazonaws.com/frontend\ndocker build -t 889149079394.dkr.ecr.ap-south-1.amazonaws.com/frontend:latest ./../flask-express-server/frontend\ndocker push 889149079394.dkr.ecr.ap-south-1.amazonaws.com/frontend:latest\n"]
+aws_ecs_task_definition.frontend: Creating...
+aws_ecs_task_definition.frontend: Creation complete after 0s [id=flask-express-express]
+aws_ecs_task_definition.backend: Creation complete after 0s [id=flask-express-flask]
+aws_ecs_service.frontend: Modifying... [id=arn:aws:ecs:ap-south-1:889149079394:service/flask-express-cluster/flask-express-express-svc]
+aws_ecs_service.backend: Modifying... [id=arn:aws:ecs:ap-south-1:889149079394:service/flask-express-cluster/flask-express-flask-svc]
+aws_ecs_service.backend: Modifications complete after 0s [id=arn:aws:ecs:ap-south-1:889149079394:service/flask-express-cluster/flask-express-flask-svc]
+
+null_resource.build_and_push_backend (local-exec): WARNING! Your credentials are stored unencrypted in '/home/azhar/.docker/config.json'.
+null_resource.build_and_push_backend (local-exec): Configure a credential helper to remove this warning. See
+null_resource.build_and_push_backend (local-exec): https://docs.docker.com/go/credential-store/
+
+null_resource.build_and_push_backend (local-exec): Login Succeeded
+aws_ecs_service.frontend: Modifications complete after 0s [id=arn:aws:ecs:ap-south-1:889149079394:service/flask-express-cluster/flask-express-express-svc]
+null_resource.build_and_push_backend (local-exec): #0 building with "default" instance using docker driver
+
+null_resource.build_and_push_backend (local-exec): #1 [internal] load build definition from Dockerfile
+null_resource.build_and_push_backend (local-exec): #1 transferring dockerfile: 402B done
+null_resource.build_and_push_backend (local-exec): #1 DONE 0.0s
+
+null_resource.build_and_push_backend (local-exec): #2 [internal] load metadata for docker.io/library/python:3.11-slim
+null_resource.build_and_push_backend (local-exec): #2 ...
+
+null_resource.build_and_push_backend (local-exec): #3 [auth] library/python:pull token for registry-1.docker.io
+null_resource.build_and_push_backend (local-exec): #3 DONE 0.0s
+
+null_resource.build_and_push_backend (local-exec): #2 [internal] load metadata for docker.io/library/python:3.11-slim
+
+null_resource.build_and_push_frontend (local-exec): WARNING! Your credentials are stored unencrypted in '/home/azhar/.docker/config.json'.
+null_resource.build_and_push_frontend (local-exec): Configure a credential helper to remove this warning. See
+null_resource.build_and_push_frontend (local-exec): https://docs.docker.com/go/credential-store/
+
+null_resource.build_and_push_frontend (local-exec): Login Succeeded
+null_resource.build_and_push_frontend (local-exec): #0 building with "default" instance using docker driver
+
+null_resource.build_and_push_frontend (local-exec): #1 [internal] load build definition from Dockerfile
+null_resource.build_and_push_frontend (local-exec): #1 transferring dockerfile: 375B done
+null_resource.build_and_push_frontend (local-exec): #1 DONE 0.0s
+
+null_resource.build_and_push_frontend (local-exec): #2 [internal] load metadata for docker.io/library/node:latest
+null_resource.build_and_push_backend (local-exec): #2 DONE 6.5s
+
+null_resource.build_and_push_backend (local-exec): #4 [internal] load .dockerignore
+null_resource.build_and_push_backend (local-exec): #4 transferring context: 45B done
+null_resource.build_and_push_backend (local-exec): #4 DONE 0.0s
+
+null_resource.build_and_push_backend (local-exec): #5 [internal] load build context
+null_resource.build_and_push_backend (local-exec): #5 transferring context: 154B done
+null_resource.build_and_push_backend (local-exec): #5 DONE 0.0s
+
+null_resource.build_and_push_backend (local-exec): #6 [1/5] FROM docker.io/library/python:3.11-slim@sha256:07d4824036af339fa1b6ef769cc99d9c10a141769538b52b3b597c84f7a7b535
+null_resource.build_and_push_backend (local-exec): #6 resolve docker.io/library/python:3.11-slim@sha256:07d4824036af339fa1b6ef769cc99d9c10a141769538b52b3b597c84f7a7b535 0.0s done
+null_resource.build_and_push_backend (local-exec): #6 DONE 0.0s
+
+null_resource.build_and_push_backend (local-exec): #7 [2/5] WORKDIR /app
+null_resource.build_and_push_backend (local-exec): #7 CACHED
+
+null_resource.build_and_push_backend (local-exec): #8 [3/5] COPY requirements.txt /app
+null_resource.build_and_push_backend (local-exec): #8 CACHED
+
+null_resource.build_and_push_backend (local-exec): #9 [4/5] RUN pip install -r requirements.txt
+null_resource.build_and_push_backend (local-exec): #9 CACHED
+
+null_resource.build_and_push_backend (local-exec): #10 [5/5] COPY . /app
+null_resource.build_and_push_backend (local-exec): #10 CACHED
+
+null_resource.build_and_push_backend (local-exec): #11 exporting to image
+null_resource.build_and_push_backend (local-exec): #11 exporting layers done
+null_resource.build_and_push_backend (local-exec): #11 exporting manifest sha256:584a09c23202781b56362aac31bcc3fdcf3adce88566a697b75523b74c925002 done
+null_resource.build_and_push_backend (local-exec): #11 exporting config sha256:d59fb9d404dca238dbdeb4fe5d7a98ce8a07b7f2326cbd34d0a16c9796ed0f8f done
+null_resource.build_and_push_backend (local-exec): #11 exporting attestation manifest sha256:89358510624c5dbb7ea6f8168d67442a2a8bc301ec3551991043ad989452c4af 0.0s done
+null_resource.build_and_push_backend (local-exec): #11 exporting manifest list sha256:f9f816f6737b7341a76d27950baf0c0774473ecc6d1af4184d5ea4ca7fd15a17 0.0s done
+null_resource.build_and_push_backend (local-exec): #11 naming to 889149079394.dkr.ecr.ap-south-1.amazonaws.com/backend:latest done
+null_resource.build_and_push_backend (local-exec): #11 unpacking to 889149079394.dkr.ecr.ap-south-1.amazonaws.com/backend:latest done
+null_resource.build_and_push_backend (local-exec): #11 DONE 0.1s
+null_resource.build_and_push_backend (local-exec): The push refers to repository [889149079394.dkr.ecr.ap-south-1.amazonaws.com/backend]
+null_resource.build_and_push_frontend (local-exec): #2 ...
+
+null_resource.build_and_push_frontend (local-exec): #3 [auth] library/node:pull token for registry-1.docker.io
+null_resource.build_and_push_frontend (local-exec): #3 DONE 0.0s
+null_resource.build_and_push_backend (local-exec): 0620e645c21b: Waiting
+null_resource.build_and_push_backend (local-exec): 37fb86c2a767: Waiting
+null_resource.build_and_push_backend (local-exec): 44136fa355b3: Waiting
+null_resource.build_and_push_backend (local-exec): 53daecf7856e: Waiting
+null_resource.build_and_push_backend (local-exec): 53daecf7856e: Waiting
+null_resource.build_and_push_backend (local-exec): 0620e645c21b: Waiting
+null_resource.build_and_push_backend (local-exec): 37fb86c2a767: Waiting
+null_resource.build_and_push_backend (local-exec): 44136fa355b3: Waiting
+
+null_resource.build_and_push_frontend (local-exec): #2 [internal] load metadata for docker.io/library/node:latest
+null_resource.build_and_push_backend (local-exec): 44136fa355b3: Waiting
+null_resource.build_and_push_backend (local-exec): 0620e645c21b: Pushed
+null_resource.build_and_push_backend (local-exec): 7efbce397249: Waiting
+null_resource.build_and_push_backend (local-exec): bbe7053e6def: Waiting
+null_resource.build_and_push_backend (local-exec): 53daecf7856e: Pushed
+null_resource.build_and_push_backend (local-exec): 557dd9f99916: Waiting
+null_resource.build_and_push_backend (local-exec): 44136fa355b3: Pushed
+null_resource.build_and_push_backend (local-exec): bbe7053e6def: Waiting
+null_resource.build_and_push_backend (local-exec): 1d8f14881b3c: Waiting
+null_resource.build_and_push_backend (local-exec): 1d8f14881b3c: Waiting
+null_resource.build_and_push_backend (local-exec): 557dd9f99916: Waiting
+null_resource.build_and_push_backend (local-exec): 557dd9f99916: Waiting
+null_resource.build_and_push_frontend (local-exec): #2 DONE 1.7s
+null_resource.build_and_push_backend (local-exec): 557dd9f99916: Waiting
+
+null_resource.build_and_push_frontend (local-exec): #4 [internal] load .dockerignore
+null_resource.build_and_push_frontend (local-exec): #4 transferring context: 72B done
+null_resource.build_and_push_frontend (local-exec): #4 DONE 0.0s
+
+null_resource.build_and_push_frontend (local-exec): #5 [internal] load build context
+null_resource.build_and_push_frontend (local-exec): #5 transferring context: 188B done
+null_resource.build_and_push_frontend (local-exec): #5 DONE 0.0s
+
+null_resource.build_and_push_frontend (local-exec): #6 [1/5] FROM docker.io/library/node:latest@sha256:e18c3ccdf7d71619990b0e85639f506e2028a95410999cab24cc373cbd10e0ac
+null_resource.build_and_push_frontend (local-exec): #6 resolve docker.io/library/node:latest@sha256:e18c3ccdf7d71619990b0e85639f506e2028a95410999cab24cc373cbd10e0ac 0.0s done
+null_resource.build_and_push_frontend (local-exec): #6 DONE 0.0s
+
+null_resource.build_and_push_frontend (local-exec): #7 [2/5] WORKDIR /app
+null_resource.build_and_push_frontend (local-exec): #7 CACHED
+
+null_resource.build_and_push_frontend (local-exec): #8 [3/5] COPY package.json /app
+null_resource.build_and_push_frontend (local-exec): #8 CACHED
+
+null_resource.build_and_push_frontend (local-exec): #9 [4/5] RUN npm install
+null_resource.build_and_push_frontend (local-exec): #9 CACHED
+
+null_resource.build_and_push_frontend (local-exec): #10 [5/5] COPY . /app
+null_resource.build_and_push_frontend (local-exec): #10 CACHED
+
+null_resource.build_and_push_frontend (local-exec): #11 exporting to image
+null_resource.build_and_push_frontend (local-exec): #11 exporting layers done
+null_resource.build_and_push_frontend (local-exec): #11 exporting manifest sha256:b405ffa23c5e2c97b87a4e20bbcd59f22279feed8f987ffbd83e93bb29272f89 done
+null_resource.build_and_push_frontend (local-exec): #11 exporting config sha256:8249e7fcf5e8081e69d743da2a0514ffe27a74f7c415f1d6fbf3df84133f1200 done
+null_resource.build_and_push_frontend (local-exec): #11 exporting attestation manifest sha256:0ab273a6268c9b71bd2ad5813e5f8fa9d04dc2536a729cb7acae93ccbc178512 0.0s done
+null_resource.build_and_push_frontend (local-exec): #11 exporting manifest list sha256:3284f5e1c19a26e4f81f4db33a134a28196fccd803f39dc50438b5d3c48284c2 0.0s done
+null_resource.build_and_push_frontend (local-exec): #11 naming to 889149079394.dkr.ecr.ap-south-1.amazonaws.com/frontend:latest done
+null_resource.build_and_push_frontend (local-exec): #11 unpacking to 889149079394.dkr.ecr.ap-south-1.amazonaws.com/frontend:latest done
+null_resource.build_and_push_frontend (local-exec): #11 DONE 0.1s
+null_resource.build_and_push_backend (local-exec): 5a422c51e889: Waiting
+null_resource.build_and_push_backend (local-exec): 1d8f14881b3c: Pushed
+null_resource.build_and_push_frontend (local-exec): The push refers to repository [889149079394.dkr.ecr.ap-south-1.amazonaws.com/frontend]
+null_resource.build_and_push_backend (local-exec): 5a422c51e889: Waiting
+null_resource.build_and_push_backend (local-exec): 5a422c51e889: Waiting
+null_resource.build_and_push_backend (local-exec): 557dd9f99916: Pushed
+null_resource.build_and_push_backend (local-exec): db79ce9cb594: Waiting
+null_resource.build_and_push_backend (local-exec): bbe7053e6def: Pushed
+null_resource.build_and_push_backend (local-exec): db79ce9cb594: Pushed
+null_resource.build_and_push_frontend (local-exec): a6dd1c05fbba: Waiting
+null_resource.build_and_push_frontend (local-exec): a6dd1c05fbba: Waiting
+null_resource.build_and_push_frontend (local-exec): a6dd1c05fbba: Waiting
+null_resource.build_and_push_frontend (local-exec): a6dd1c05fbba: Waiting
+null_resource.build_and_push_frontend (local-exec): a6dd1c05fbba: Waiting
+null_resource.build_and_push_frontend (local-exec): a6dd1c05fbba: Waiting
+null_resource.build_and_push_frontend (local-exec): a6dd1c05fbba: Waiting
+null_resource.build_and_push_frontend (local-exec): a6dd1c05fbba: Waiting
+null_resource.build_and_push_frontend (local-exec): a6dd1c05fbba: Waiting
+null_resource.build_and_push_backend: Still creating... [00m10s elapsed]
+null_resource.build_and_push_frontend: Still creating... [00m10s elapsed]
+null_resource.build_and_push_frontend (local-exec): a6dd1c05fbba: Waiting
+null_resource.build_and_push_frontend (local-exec): a6dd1c05fbba: Waiting
+null_resource.build_and_push_frontend (local-exec): a6dd1c05fbba: Waiting
+null_resource.build_and_push_frontend (local-exec): a6dd1c05fbba: Waiting
+null_resource.build_and_push_frontend (local-exec): a6dd1c05fbba: Waiting
+null_resource.build_and_push_frontend (local-exec): a6dd1c05fbba: Waiting
+null_resource.build_and_push_frontend (local-exec): a6dd1c05fbba: Waiting
+null_resource.build_and_push_frontend (local-exec): a6dd1c05fbba: Waiting
+null_resource.build_and_push_frontend (local-exec): a6dd1c05fbba: Waiting
+null_resource.build_and_push_frontend (local-exec): a6dd1c05fbba: Waiting
+null_resource.build_and_push_frontend (local-exec): a6dd1c05fbba: Waiting
+null_resource.build_and_push_frontend (local-exec): a6dd1c05fbba: Waiting
+null_resource.build_and_push_frontend (local-exec): a6dd1c05fbba: Waiting
+null_resource.build_and_push_frontend (local-exec): e8a88afca2bd: Waiting
+null_resource.build_and_push_backend (local-exec): 5a422c51e889: Pushed
+null_resource.build_and_push_frontend (local-exec): a6dd1c05fbba: Waiting
+null_resource.build_and_push_frontend (local-exec): e8a88afca2bd: Waiting
+null_resource.build_and_push_frontend (local-exec): a6dd1c05fbba: Waiting
+null_resource.build_and_push_frontend (local-exec): e8a88afca2bd: Waiting
+null_resource.build_and_push_frontend (local-exec): a6dd1c05fbba: Waiting
+null_resource.build_and_push_frontend (local-exec): e8a88afca2bd: Waiting
+null_resource.build_and_push_frontend (local-exec): a6dd1c05fbba: Waiting
+null_resource.build_and_push_frontend (local-exec): e8a88afca2bd: Waiting
+null_resource.build_and_push_frontend (local-exec): a6dd1c05fbba: Waiting
+null_resource.build_and_push_frontend (local-exec): e8a88afca2bd: Waiting
+null_resource.build_and_push_frontend (local-exec): a6dd1c05fbba: Waiting
+null_resource.build_and_push_frontend (local-exec): e8a88afca2bd: Waiting
+null_resource.build_and_push_frontend (local-exec): a6dd1c05fbba: Waiting
+null_resource.build_and_push_frontend (local-exec): e8a88afca2bd: Waiting
+null_resource.build_and_push_frontend (local-exec): e8a88afca2bd: Waiting
+null_resource.build_and_push_frontend (local-exec): a6dd1c05fbba: Waiting
+null_resource.build_and_push_frontend (local-exec): a6dd1c05fbba: Waiting
+null_resource.build_and_push_frontend (local-exec): e8a88afca2bd: Waiting
+null_resource.build_and_push_frontend (local-exec): a6dd1c05fbba: Waiting
+null_resource.build_and_push_frontend (local-exec): e8a88afca2bd: Waiting
+null_resource.build_and_push_frontend (local-exec): a6dd1c05fbba: Waiting
+null_resource.build_and_push_frontend (local-exec): e8a88afca2bd: Waiting
+null_resource.build_and_push_frontend (local-exec): a6dd1c05fbba: Waiting
+null_resource.build_and_push_frontend (local-exec): e8a88afca2bd: Waiting
+null_resource.build_and_push_frontend (local-exec): a6dd1c05fbba: Waiting
+null_resource.build_and_push_frontend (local-exec): e8a88afca2bd: Waiting
+null_resource.build_and_push_frontend (local-exec): a6dd1c05fbba: Waiting
+null_resource.build_and_push_frontend (local-exec): e8a88afca2bd: Waiting
+null_resource.build_and_push_frontend (local-exec): a6dd1c05fbba: Waiting
+null_resource.build_and_push_frontend (local-exec): e8a88afca2bd: Waiting
+null_resource.build_and_push_frontend (local-exec): a6dd1c05fbba: Waiting
+null_resource.build_and_push_frontend (local-exec): e8a88afca2bd: Waiting
+null_resource.build_and_push_frontend (local-exec): a6dd1c05fbba: Waiting
+null_resource.build_and_push_frontend (local-exec): e8a88afca2bd: Waiting
+null_resource.build_and_push_frontend (local-exec): a6dd1c05fbba: Waiting
+null_resource.build_and_push_frontend (local-exec): e8a88afca2bd: Waiting
+null_resource.build_and_push_frontend (local-exec): a6dd1c05fbba: Waiting
+null_resource.build_and_push_frontend (local-exec): e8a88afca2bd: Waiting
+null_resource.build_and_push_frontend (local-exec): a6dd1c05fbba: Waiting
+null_resource.build_and_push_frontend (local-exec): e8a88afca2bd: Waiting
+null_resource.build_and_push_frontend (local-exec): e8a88afca2bd: Waiting
+null_resource.build_and_push_frontend (local-exec): a6dd1c05fbba: Waiting
+null_resource.build_and_push_frontend (local-exec): e8a88afca2bd: Waiting
+null_resource.build_and_push_frontend (local-exec): a6dd1c05fbba: Waiting
+null_resource.build_and_push_frontend (local-exec): a6dd1c05fbba: Waiting
+null_resource.build_and_push_frontend (local-exec): e8a88afca2bd: Waiting
+null_resource.build_and_push_frontend (local-exec): a6dd1c05fbba: Waiting
+null_resource.build_and_push_frontend (local-exec): e8a88afca2bd: Waiting
+null_resource.build_and_push_frontend (local-exec): a6dd1c05fbba: Waiting
+null_resource.build_and_push_frontend (local-exec): e8a88afca2bd: Waiting
+null_resource.build_and_push_frontend (local-exec): a6dd1c05fbba: Waiting
+null_resource.build_and_push_frontend (local-exec): e8a88afca2bd: Waiting
+null_resource.build_and_push_frontend (local-exec): a6dd1c05fbba: Waiting
+null_resource.build_and_push_frontend (local-exec): e8a88afca2bd: Waiting
+null_resource.build_and_push_frontend (local-exec): 411d2dc8717d: Waiting
+null_resource.build_and_push_backend (local-exec): 7efbce397249: Pushed
+null_resource.build_and_push_frontend (local-exec): 696c1fe91c64: Waiting
+null_resource.build_and_push_backend: Still creating... [00m20s elapsed]
+null_resource.build_and_push_frontend: Still creating... [00m20s elapsed]
+null_resource.build_and_push_backend (local-exec): 37fb86c2a767: Pushed
+null_resource.build_and_push_frontend (local-exec): 14f1299dcbc9: Waiting
+null_resource.build_and_push_frontend (local-exec): 14f1299dcbc9: Pushed
+null_resource.build_and_push_frontend (local-exec): 4266ea158291: Waiting
+null_resource.build_and_push_frontend (local-exec): 4266ea158291: Waiting
+null_resource.build_and_push_backend: Still creating... [00m30s elapsed]
+null_resource.build_and_push_frontend: Still creating... [00m30s elapsed]
+null_resource.build_and_push_frontend (local-exec): e8a88afca2bd: Pushed
+null_resource.build_and_push_frontend (local-exec): eca6dde014d7: Waiting
+null_resource.build_and_push_frontend (local-exec): eca6dde014d7: Pushed
+null_resource.build_and_push_backend (local-exec): latest: digest: sha256:f9f816f6737b7341a76d27950baf0c0774473ecc6d1af4184d5ea4ca7fd15a17 size: 856
+null_resource.build_and_push_backend: Creation complete after 35s [id=1688650543292610284]
+null_resource.build_and_push_frontend (local-exec): dfc3e23f0e9c: Waiting
+null_resource.build_and_push_frontend (local-exec): dfc3e23f0e9c: Pushed
+null_resource.build_and_push_frontend (local-exec): 60f0c0a12e5f: Waiting
+null_resource.build_and_push_frontend (local-exec): 60f0c0a12e5f: Pushed
+null_resource.build_and_push_frontend (local-exec): f268a8a73e04: Waiting
+null_resource.build_and_push_frontend (local-exec): 2dfde8aa5151: Waiting
+null_resource.build_and_push_frontend (local-exec): f268a8a73e04: Pushed
+null_resource.build_and_push_frontend (local-exec): 2dfde8aa5151: Waiting
+null_resource.build_and_push_frontend (local-exec): 2dfde8aa5151: Waiting
+null_resource.build_and_push_frontend (local-exec): 2dfde8aa5151: Pushed
+null_resource.build_and_push_frontend (local-exec): 44136fa355b3: Waiting
+null_resource.build_and_push_frontend: Still creating... [00m40s elapsed]
+null_resource.build_and_push_frontend (local-exec): 30aa0c6851eb: Waiting
+null_resource.build_and_push_frontend (local-exec): 44136fa355b3: Pushed
+null_resource.build_and_push_frontend (local-exec): 30aa0c6851eb: Waiting
+null_resource.build_and_push_frontend (local-exec): 30aa0c6851eb: Waiting
+null_resource.build_and_push_frontend (local-exec): 30aa0c6851eb: Waiting
+null_resource.build_and_push_frontend (local-exec): 30aa0c6851eb: Pushed
+null_resource.build_and_push_frontend: Still creating... [00m50s elapsed]
+null_resource.build_and_push_frontend (local-exec): a6dd1c05fbba: Pushed
+null_resource.build_and_push_frontend (local-exec): 411d2dc8717d: Pushed
+null_resource.build_and_push_frontend: Still creating... [01m00s elapsed]
+null_resource.build_and_push_frontend (local-exec): 4266ea158291: Pushed
+null_resource.build_and_push_frontend: Still creating... [01m10s elapsed]
+null_resource.build_and_push_frontend: Still creating... [01m20s elapsed]
+null_resource.build_and_push_frontend: Still creating... [01m30s elapsed]
+null_resource.build_and_push_frontend (local-exec): 696c1fe91c64: Pushed
+null_resource.build_and_push_frontend (local-exec): latest: digest: sha256:3284f5e1c19a26e4f81f4db33a134a28196fccd803f39dc50438b5d3c48284c2 size: 856
+null_resource.build_and_push_frontend: Creation complete after 1m30s [id=1856254646539091776]
+
+Apply complete! Resources: 6 added, 2 changed, 0 destroyed.
+
+Outputs:
+
+alb_dns_name = "flask-express-alb-1502811336.ap-south-1.elb.amazonaws.com"
+backend_ecr_repository_url = "889149079394.dkr.ecr.ap-south-1.amazonaws.com/backend"
+ecs_cluster_name = "flask-express-cluster"
+frontend_ecr_repository_url = "889149079394.dkr.ecr.ap-south-1.amazonaws.com/frontend"
+vpc_id = "vpc-07baa8a03ce84820d"
+azhar@azhar9983:~/tutedude/Terraform_Azharuddin_Ansari/terraform-task-3$ 
