@@ -5,3 +5,4 @@ notebook
 terraform.tfstate
 terraform.tfstate.backup    
 
+azhar_tfplan
