@@ -1353,3 +1353,193 @@ ecs_cluster_name = "flask-express-cluster"
 frontend_ecr_repository_url = "889149079394.dkr.ecr.ap-south-1.amazonaws.com/frontend"
 vpc_id = "vpc-07baa8a03ce84820d"
 azhar@azhar9983:~/tutedude/Terraform_Azharuddin_Ansari/terraform-task-3$ 
+azhar@azhar9983:~/tutedude/Terraform_Azharuddin_Ansari/terraform-task-3$ aws s3 ls
+azhar@azhar9983:~/tutedude/Terraform_Azharuddin_Ansari/terraform-task-3$ aws s3api create-bucket --bucket azhar9983-tutedude-terraform --region ap-south-1 \
+     --create-bucket-configuration LocationConstraint=ap-south-1
+{
+    "Location": "http://azhar9983-tutedude-terraform.s3.amazonaws.com/",
+    "BucketArn": "arn:aws:s3:::azhar9983-tutedude-terraform"
+}
+azhar@azhar9983:~/tutedude/Terraform_Azharuddin_Ansari/terraform-task-3$ aws s3 ls
+2026-11-16 22:49:59 azhar9983-tutedude-terraform
+azhar@azhar9983:~/tutedude/Terraform_Azharuddin_Ansari/terraform-task-3$ aws s3api put-bucket-versioning --bucket azhar9983-tutedude-terraform \
+     --versioning-configuration Status=Enabled
+azhar@azhar9983:~/tutedude/Terraform_Azharuddin_Ansari/terraform-task-3$ aws s3 ls
+2026-11-16 22:50:36 azhar9983-tutedude-terraform
+azhar@azhar9983:~/tutedude/Terraform_Azharuddin_Ansari/terraform-task-3$ terraform init -backend-config=backend.hcl
+Initializing the backend...
+
+Initializing provider plugins...
+- Reusing version 5.100.0 of hashicorp/aws from the dependency lock file
+- Reusing version 3.3.2 of hashicorp/null from the dependency lock file
+- Using previously-installed hashicorp/aws v5.100.0
+- Using previously-installed hashicorp/null v3.3.2
+
+╷
+│ Warning: Missing backend configuration
+│ 
+│ -backend-config was used without a "backend" block in the configuration.
+│ 
+│ If you intended to override the default local backend configuration,
+│ no action is required, but you may add an explicit backend block to your
+│ configuration to clear this warning:
+│ 
+│ terraform {
+│   backend "local" {}
+│ }
+│ 
+│ However, if you intended to override a defined backend, please verify that
+│ the backend configuration is present and valid.
+│ 
+╵
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+azhar@azhar9983:~/tutedude/Terraform_Azharuddin_Ansari/terraform-task-3$ terraform plan -out=azhar_tfplan
+data.aws_iam_policy_document.ecs_assume: Reading...
+data.aws_availability_zones.available: Reading...
+aws_ecs_cluster.main: Refreshing state... [id=arn:aws:ecs:ap-south-1:889149079394:cluster/flask-express-cluster]
+aws_ecr_repository.frontend: Refreshing state... [id=frontend]
+aws_cloudwatch_log_group.frontend: Refreshing state... [id=/ecs/flask-express-express]
+aws_ecr_repository.backend: Refreshing state... [id=backend]
+aws_cloudwatch_log_group.backend: Refreshing state... [id=/ecs/flask-express-flask]
+aws_vpc.main: Refreshing state... [id=vpc-07baa8a03ce84820d]
+data.aws_iam_policy_document.ecs_assume: Read complete after 0s [id=1077804475]
+aws_iam_role.task_execution: Refreshing state... [id=flask-express-task-exec-role]
+null_resource.build_and_push_backend: Refreshing state... [id=1688650543292610284]
+null_resource.build_and_push_frontend: Refreshing state... [id=1856254646539091776]
+data.aws_availability_zones.available: Read complete after 1s [id=ap-south-1]
+aws_subnet.public[1]: Refreshing state... [id=subnet-0184b86473a671ec2]
+aws_subnet.public[0]: Refreshing state... [id=subnet-0fe771d1a383fba66]
+aws_internet_gateway.igw: Refreshing state... [id=igw-06b951b2902ff834c]
+aws_security_group.alb: Refreshing state... [id=sg-0cd748cfeeda0b8db]
+aws_lb_target_group.frontend: Refreshing state... [id=arn:aws:elasticloadbalancing:ap-south-1:889149079394:targetgroup/flask-express-express-tg/c71d3aa0c2f7c2e6]
+aws_lb_target_group.backend: Refreshing state... [id=arn:aws:elasticloadbalancing:ap-south-1:889149079394:targetgroup/flask-express-flask-tg/9550bff51a717c6f]
+aws_iam_role_policy_attachment.task_execution: Refreshing state... [id=flask-express-task-exec-role-20261116160806405800000002]
+aws_ecs_task_definition.backend: Refreshing state... [id=flask-express-flask]
+aws_ecs_task_definition.frontend: Refreshing state... [id=flask-express-express]
+aws_lb.main: Refreshing state... [id=arn:aws:elasticloadbalancing:ap-south-1:889149079394:loadbalancer/app/flask-express-alb/4f58408ba27a546c]
+aws_security_group.ecs_tasks: Refreshing state... [id=sg-063c16fd6cba86bdd]
+aws_route_table.public: Refreshing state... [id=rtb-0302513599b3e4410]
+aws_route_table_association.public[0]: Refreshing state... [id=rtbassoc-09bd2364b0a3eecf8]
+aws_route_table_association.public[1]: Refreshing state... [id=rtbassoc-03c43d2df2cf67b88]
+aws_lb_listener.http: Refreshing state... [id=arn:aws:elasticloadbalancing:ap-south-1:889149079394:listener/app/flask-express-alb/4f58408ba27a546c/afa3daa06629f1b7]
+aws_lb_listener_rule.api: Refreshing state... [id=arn:aws:elasticloadbalancing:ap-south-1:889149079394:listener-rule/app/flask-express-alb/4f58408ba27a546c/afa3daa06629f1b7/b2e55eeea5a0ded7]
+aws_ecs_service.frontend: Refreshing state... [id=arn:aws:ecs:ap-south-1:889149079394:service/flask-express-cluster/flask-express-express-svc]
+aws_ecs_service.backend: Refreshing state... [id=arn:aws:ecs:ap-south-1:889149079394:service/flask-express-cluster/flask-express-flask-svc]
+
+No changes. Your infrastructure matches the configuration.
+
+Terraform has compared your real infrastructure against your configuration and found no differences, so no changes are needed.
+azhar@azhar9983:~/tutedude/Terraform_Azharuddin_Ansari/terraform-task-3$ terraform apply azhar_tfplan
+
+Apply complete! Resources: 0 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+alb_dns_name = "flask-express-alb-1502811336.ap-south-1.elb.amazonaws.com"
+backend_ecr_repository_url = "889149079394.dkr.ecr.ap-south-1.amazonaws.com/backend"
+ecs_cluster_name = "flask-express-cluster"
+frontend_ecr_repository_url = "889149079394.dkr.ecr.ap-south-1.amazonaws.com/frontend"
+vpc_id = "vpc-07baa8a03ce84820d"
+azhar@azhar9983:~/tutedude/Terraform_Azharuddin_Ansari/terraform-task-3$ aws s3 ls
+2026-11-16 22:50:36 azhar9983-tutedude-terraform
+azhar@azhar9983:~/tutedude/Terraform_Azharuddin_Ansari/terraform-task-3$ aws s3 ls s3://azhar9983-tutedude-terraform
+azhar@azhar9983:~/tutedude/Terraform_Azharuddin_Ansari/terraform-task-3$ aws s3 ls s3://azhar9983-tutedude-terraform --recursive
+azhar@azhar9983:~/tutedude/Terraform_Azharuddin_Ansari/terraform-task-3$ terraform init
+Initializing the backend...
+Do you want to copy existing state to the new backend?
+  Pre-existing state was found while migrating the previous "local" backend to the
+  newly configured "s3" backend. No existing state was found in the newly
+  configured "s3" backend. Do you want to copy this state to the new "s3"
+  backend? Enter "yes" to copy and "no" to start with an empty state.
+
+  Enter a value: yes
+
+
+Successfully configured the backend "s3"! Terraform will automatically
+use this backend unless the backend configuration changes.
+
+Initializing provider plugins...
+- Reusing version 5.100.0 of hashicorp/aws from the dependency lock file
+- Reusing version 3.3.2 of hashicorp/null from the dependency lock file
+- Using previously-installed hashicorp/aws v5.100.0
+- Using previously-installed hashicorp/null v3.3.2
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+azhar@azhar9983:~/tutedude/Terraform_Azharuddin_Ansari/terraform-task-3$ terraform apply azhar_tfplan
+╷
+│ Error: Saved plan does not match the given state
+│ 
+│ The given plan file can not be applied because it was created from a different state lineage.
+╵
+azhar@azhar9983:~/tutedude/Terraform_Azharuddin_Ansari/terraform-task-3$ terraform apply azhar_tfplan_new
+╷
+│ Error: Failed to load "azhar_tfplan_new" as a plan file
+│ 
+│ Error: stat azhar_tfplan_new: no such file or directory
+╵
+azhar@azhar9983:~/tutedude/Terraform_Azharuddin_Ansari/terraform-task-3$ terraform plan -out=azhar_tfplan
+data.aws_iam_policy_document.ecs_assume: Reading...
+aws_cloudwatch_log_group.backend: Refreshing state... [id=/ecs/flask-express-flask]
+data.aws_availability_zones.available: Reading...
+aws_ecr_repository.backend: Refreshing state... [id=backend]
+aws_cloudwatch_log_group.frontend: Refreshing state... [id=/ecs/flask-express-express]
+aws_vpc.main: Refreshing state... [id=vpc-07baa8a03ce84820d]
+aws_ecr_repository.frontend: Refreshing state... [id=frontend]
+aws_ecs_cluster.main: Refreshing state... [id=arn:aws:ecs:ap-south-1:889149079394:cluster/flask-express-cluster]
+data.aws_iam_policy_document.ecs_assume: Read complete after 0s [id=1077804475]
+aws_iam_role.task_execution: Refreshing state... [id=flask-express-task-exec-role]
+null_resource.build_and_push_backend: Refreshing state... [id=1688650543292610284]
+null_resource.build_and_push_frontend: Refreshing state... [id=1856254646539091776]
+data.aws_availability_zones.available: Read complete after 1s [id=ap-south-1]
+aws_subnet.public[0]: Refreshing state... [id=subnet-0fe771d1a383fba66]
+aws_internet_gateway.igw: Refreshing state... [id=igw-06b951b2902ff834c]
+aws_subnet.public[1]: Refreshing state... [id=subnet-0184b86473a671ec2]
+aws_security_group.alb: Refreshing state... [id=sg-0cd748cfeeda0b8db]
+aws_lb_target_group.frontend: Refreshing state... [id=arn:aws:elasticloadbalancing:ap-south-1:889149079394:targetgroup/flask-express-express-tg/c71d3aa0c2f7c2e6]
+aws_lb_target_group.backend: Refreshing state... [id=arn:aws:elasticloadbalancing:ap-south-1:889149079394:targetgroup/flask-express-flask-tg/9550bff51a717c6f]
+aws_route_table.public: Refreshing state... [id=rtb-0302513599b3e4410]
+aws_route_table_association.public[1]: Refreshing state... [id=rtbassoc-03c43d2df2cf67b88]
+aws_route_table_association.public[0]: Refreshing state... [id=rtbassoc-09bd2364b0a3eecf8]
+aws_security_group.ecs_tasks: Refreshing state... [id=sg-063c16fd6cba86bdd]
+aws_lb.main: Refreshing state... [id=arn:aws:elasticloadbalancing:ap-south-1:889149079394:loadbalancer/app/flask-express-alb/4f58408ba27a546c]
+aws_lb_listener.http: Refreshing state... [id=arn:aws:elasticloadbalancing:ap-south-1:889149079394:listener/app/flask-express-alb/4f58408ba27a546c/afa3daa06629f1b7]
+aws_lb_listener_rule.api: Refreshing state... [id=arn:aws:elasticloadbalancing:ap-south-1:889149079394:listener-rule/app/flask-express-alb/4f58408ba27a546c/afa3daa06629f1b7/b2e55eeea5a0ded7]
+aws_iam_role_policy_attachment.task_execution: Refreshing state... [id=flask-express-task-exec-role-20261116160806405800000002]
+aws_ecs_task_definition.backend: Refreshing state... [id=flask-express-flask]
+aws_ecs_task_definition.frontend: Refreshing state... [id=flask-express-express]
+aws_ecs_service.backend: Refreshing state... [id=arn:aws:ecs:ap-south-1:889149079394:service/flask-express-cluster/flask-express-flask-svc]
+aws_ecs_service.frontend: Refreshing state... [id=arn:aws:ecs:ap-south-1:889149079394:service/flask-express-cluster/flask-express-express-svc]
+
+No changes. Your infrastructure matches the configuration.
+
+Terraform has compared your real infrastructure against your configuration and found no differences, so no changes are needed.
+azhar@azhar9983:~/tutedude/Terraform_Azharuddin_Ansari/terraform-task-3$ terraform apply azhar_tfplan
+
+Apply complete! Resources: 0 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+alb_dns_name = "flask-express-alb-1502811336.ap-south-1.elb.amazonaws.com"
+backend_ecr_repository_url = "889149079394.dkr.ecr.ap-south-1.amazonaws.com/backend"
+ecs_cluster_name = "flask-express-cluster"
+frontend_ecr_repository_url = "889149079394.dkr.ecr.ap-south-1.amazonaws.com/frontend"
+vpc_id = "vpc-07baa8a03ce84820d"
+azhar@azhar9983:~/tutedude/Terraform_Azharuddin_Ansari/terraform-task-3$ aws s3 ls s3://azhar9983-tutedude-terraform --recursive
+2026-11-16 23:00:29      53733 terraform.tfstate
+azhar@azhar9983:~/tutedude/Terraform_Azharuddin_Ansari/terraform-task-3$ 

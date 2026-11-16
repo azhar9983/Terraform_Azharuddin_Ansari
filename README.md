@@ -764,27 +764,68 @@ ECS services running and accessible via the ALB.
 
 ###########################################################
 
-repeat same like task 1 but with below code
-goto task3 folder
+
+### setup s3 bucket :
+```bash
+aws s3api create-bucket --bucket azhar9983-tutedude-terraform --region ap-south-1 \
+     --create-bucket-configuration LocationConstraint=ap-south-1
+   aws s3api put-bucket-versioning --bucket azhar9983-tutedude-terraform \
+     --versioning-configuration Status=Enabled
 ```
+### backend.hcl file direct in main:
+bucket       = "azhar9983-tutedude-terraform"
+key          = "terraform.tfstate"
+region       = "ap-south-1"
+encrypt      = true
+use_lockfile = true
+
+
+# Task 3 README
+
+This task deploys a complete AWS container infrastructure using Terraform. The configuration in the `terraform-task-3` folder provisions a VPC, public/private subnets, internet gateway, security groups, ALB, ECR, ECS cluster, ECS task definitions, and services.
+
+## Folder files
+
+- `main.tf` - Terraform backend, provider configuration, and main resource wiring
+- `variables.tf` - Variables for region, names, CIDR blocks, AMIs, container settings, and tags
+- `vpc.tf` - VPC, subnets, route tables, internet gateway, and networking configuration
+- `alb.tf` - Application Load Balancer, target groups, listeners, and security rules
+- `ecs.tf` - ECS cluster, task definition, service, security groups, and container configuration
+- `ecr.tf` - Amazon ECR repository creation and image repository setup
+- `outputs.tf` - Output values for ALB DNS, ECR repository, ECS cluster, and key resource IDs
+- `terraform.tfvars` - Environment-specific values for AWS region, project name, and resource naming
+
+## Architecture deployed
+
+- VPC with public and private subnets
+- Internet gateway for public access
+- ALB in public subnets with listener and target group
+- ECR repositories for application image storage
+- ECS cluster with Fargate task definitions
+- ECS service connected to ALB
+- Security groups for ALB and container traffic
+
+## Example Terraform flow
+
+```bash
 terraform init
-terraform fmt
-terraform validate 
+terraform validate
 terraform plan
-terraform apply
-and approve or pre configure auto approve
+terraform apply -auto-approve
 ```
 
-````````````````````````````````````code below this line``````````````````````````````````
+## Notes
 
+- This setup is designed for AWS Fargate-based container hosting.
+- The ALB routes incoming requests to the ECS service.
+- The ECR repository stores the container images used by ECS.
+- The state file can be stored in S3 using a backend configuration.
 
+## Cleanup
 
-
-
-
-```````````````````````````````````code ends``````````````````````````````````````````````
-
-
+```bash
+terraform destroy
+```
 
 
 
